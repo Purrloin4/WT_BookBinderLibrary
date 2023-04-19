@@ -1,6 +1,6 @@
 # Hello, welcome to our WebTech project
 
-## This project implements 2 classes, web technologies and software engineering meaning that whe have to:
+## This project implements 2 classes, web technologies and software engineering meaning that we have to:
 
 ### Design and implement a web app using modern web technologies
 - HTML5
