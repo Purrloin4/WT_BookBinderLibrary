@@ -26,7 +26,7 @@ For this project we have to make a website called BookBinder, it is a sort of so
 - (automatically) deployed on studev.groept.be server
 
 ## Team members
-- Project Manager/ SCRUM master: Sinyeol an
+- Project Manager/ SCRUM master: Sinyeol An
 - DB engineer: Zeus Ansleeuw
 - Backend Developer: Wentai Ye
 - Frontend Developer: Dries Van Ranst
