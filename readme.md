@@ -13,7 +13,7 @@
 - GitLab Issue Board
 - it log as process documentation
 
-##Subject
+## Subject
 For this project we have to make a website called BookBinder, it is a sort of social media for the library in Heeverlee to encourage joung readers to find other joung readers with interest in the same books so that they can discuss them.
 
 ## Minimal Requirements
