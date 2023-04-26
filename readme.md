@@ -27,7 +27,7 @@ For this project we have to make a website called BookBinder, it is a sort of so
 
 ## Team members
 - Project Manager/ SCRUM master: Sinyeol An
-- DB engineer: Zeus Ansleeuw
+- DB engineer: Zeus Anseeuw
 - Backend Developer: Wentai Ye
 - Frontend Developer: Dries Van Ranst
 - Deployment/CI engineer: Cédric Josse
