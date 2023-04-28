@@ -28,23 +28,34 @@ fi
 
 ##################################################
 #
-# { RUN SOME LOCAL TEST
+# { RUN SOME LOCAL TEST WHEN IT'S APPLICABLE
 #
 ##################################################
 
-echo -n 'RUN PHP LINTER: '
-./vendor/bin/php-cs-fixer fix src --dry-run --quiet
-if [ $? -eq 0 ]; then
-  echo "${GREEN}SUCCEEDED$NC"
-else
-  echo "${RED}FAILED$NC"
-  echo 'Run `composer lint:php:fix` to fix the problem'\
-      'and `git add` the change.'
-  exit 1
-fi
+run_php () {
+  echo -n "RUN PHP LINTER ON \`$1\`: "
+  ./vendor/bin/php-cs-fixer fix $1 --dry-run --quiet
+  if [ $? -eq 0 ]; then
+    echo "${GREEN}SUCCEEDED$NC"
+  else
+    echo "${RED}FAILED$NC"
+    echo "Run \`${RED}composer lint:php:fix $1$NC\` to fix the problem"\
+        "then run \`${RED}git add $1$NC\` the change."
+    exit 1
+  fi
+}
+
+files=`git diff --name-only --staged`
+
+for file in $files
+do
+  if [ ${file##*.} = 'php' ]; then
+    run_php $file
+  fi
+done
 
 ##################################################
 #
-# } RUN SOME LOCAL TEST
+# } RUN SOME LOCAL TEST WHEN IT'S APPLICABLE
 #
 ##################################################

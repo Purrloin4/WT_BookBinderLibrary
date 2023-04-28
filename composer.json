@@ -53,7 +53,7 @@
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "lint:php": "./vendor/bin/php-cs-fixer fix src --verbose --dry-run",
-        "lint:php:fix": "./vendor/bin/php-cs-fixer fix src",
+        "lint:php:fix": "./vendor/bin/php-cs-fixer fix --quiet",
         "post-install-cmd": [
             "@auto-scripts"
         ],
@@ -64,6 +64,10 @@
             "git config --local core.hooksPath .githooks",
             "echo \"\\033[0;32mGitHooks are successfully installed!\\033[0m\""
         ]
+    },
+    "scripts-descriptions": {
+        "lint:php": "Run PHP linter",
+        "lint:php:fix": "Fix PHP linting problems. Put the paths to files or directories as arguments"
     },
     "conflict": {
         "symfony/symfony": "*"
