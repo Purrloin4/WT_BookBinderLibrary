@@ -15,7 +15,7 @@ readonly NC='\033[0m'
 branch="$(git rev-parse --abbrev-ref HEAD)"
 
 if [ "$branch" = "master" ]; then
-  echo "You cannot commit directly to master branch"
+  echo "${RED}You cannot commit directly to master branch$NC"
   exit 1
 fi
 
