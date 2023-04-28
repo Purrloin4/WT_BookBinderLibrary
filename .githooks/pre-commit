@@ -1,5 +1,9 @@
 #!/bin/sh
 
+readonly RED='\033[0;31m'
+readonly GREEN='\033[0;32m'
+readonly NC='\033[0m'
+
 ##################################################
 #
 # { PREVENT COMMIT TO THE MASTER BRANCH
@@ -18,5 +22,28 @@ fi
 ##################################################
 #
 # } PREVENT COMMIT TO THE MASTER BRANCH
+#
+##################################################
+
+##################################################
+#
+# { RUN SOME LOCAL TEST
+#
+##################################################
+
+echo -n 'RUN PHP LINTER: '
+./vendor/bin/php-cs-fixer fix src --dry-run --quiet
+if [ $? -eq 0 ]; then
+  echo "${GREEN}SUCCEEDED$NC"
+else
+  echo "${RED}FAILED$NC"
+  echo 'Run `composer lint:php:fix` to fix the problem'\
+      'and `git add` the change.'
+  exit 1
+fi
+
+##################################################
+#
+# } RUN SOME LOCAL TEST
 #
 ##################################################
