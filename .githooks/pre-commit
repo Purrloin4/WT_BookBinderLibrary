@@ -1,0 +1,22 @@
+#!/bin/sh
+
+##################################################
+#
+# { PREVENT COMMIT TO THE MASTER BRANCH
+# 
+# https://stackoverflow.com/a/40465455/4276533
+#
+##################################################
+
+branch="$(git rev-parse --abbrev-ref HEAD)"
+
+if [ "$branch" = "master" ]; then
+  echo "You cannot commit directly to master branch"
+  exit 1
+fi
+
+##################################################
+#
+# } PREVENT COMMIT TO THE MASTER BRANCH
+#
+##################################################

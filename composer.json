@@ -57,6 +57,10 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "install-githooks": [
+            "git config --local core.hooksPath .githooks",
+            "echo \"\\033[0;32mGitHooks are successfully installed!\\033[0m\""
         ]
     },
     "conflict": {

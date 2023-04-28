@@ -31,3 +31,14 @@ For this project we have to make a website called BookBinder, it is a sort of so
 - Backend Developer: Wentai Ye
 - Frontend Developer: Dries Van Ranst
 - Deployment/CI engineer: Cédric Josse
+
+## Using this repo
+
+### Installing githooks
+
+To make our project consistent, please install the githooks by running
+the following command.
+
+```
+composer install-githooks
+```
