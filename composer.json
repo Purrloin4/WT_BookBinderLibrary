@@ -52,6 +52,8 @@
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
+        "lint:php": "./vendor/bin/php-cs-fixer fix src --verbose --dry-run",
+        "lint:php:fix": "./vendor/bin/php-cs-fixer fix src",
         "post-install-cmd": [
             "@auto-scripts"
         ],
