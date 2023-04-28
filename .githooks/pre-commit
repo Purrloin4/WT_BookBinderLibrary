@@ -1,4 +1,9 @@
 #!/bin/sh
+# vi: ts=2 sw=2
+
+readonly RED='\033[0;31m'
+readonly GREEN='\033[0;32m'
+readonly NC='\033[0m'
 
 ##################################################
 #
@@ -11,12 +16,46 @@
 branch="$(git rev-parse --abbrev-ref HEAD)"
 
 if [ "$branch" = "master" ]; then
-  echo "You cannot commit directly to master branch"
+  echo "${RED}You cannot commit directly to master branch$NC"
   exit 1
 fi
 
 ##################################################
 #
 # } PREVENT COMMIT TO THE MASTER BRANCH
+#
+##################################################
+
+##################################################
+#
+# { RUN SOME LOCAL TEST WHEN IT'S APPLICABLE
+#
+##################################################
+
+run_php () {
+  echo -n "RUN PHP LINTER ON \`$1\`: "
+  ./vendor/bin/php-cs-fixer fix $1 --dry-run --quiet
+  if [ $? -eq 0 ]; then
+    echo "${GREEN}SUCCEEDED$NC"
+  else
+    echo "${RED}FAILED$NC"
+    echo "Run \`${RED}composer lint:php:fix $1$NC\` to fix the problem"\
+        "then run \`${RED}git add $1$NC\` the change."
+    exit 1
+  fi
+}
+
+files=`git diff --name-only --staged`
+
+for file in $files
+do
+  if [ ${file##*.} = 'php' ]; then
+    run_php $file
+  fi
+done
+
+##################################################
+#
+# } RUN SOME LOCAL TEST WHEN IT'S APPLICABLE
 #
 ##################################################
