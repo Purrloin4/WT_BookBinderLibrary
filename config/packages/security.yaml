@@ -1,6 +1,7 @@
 security:
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
+        Symfony\Component\Security\Core\User\InMemoryUser: 'plaintext'
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
@@ -9,13 +10,21 @@ security:
             entity:
                 class: App\Entity\User
                 property: email
+        user_for_dev:
+            memory:
+                users:
+                    admin: { password: admin, roles: [ ROLE_ADMIN, ROLE_SUPER_ADMIN ] }
+                    hello: { password: world, roles: [ ROLE_USER ] }
+        all_users:
+            chain:
+                providers: [ app_user_provider, user_for_dev ]
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             lazy: true
-            provider: app_user_provider
+            provider: all_users
             custom_authenticator: App\Security\LoginFormAuthenticator
             logout:
                 path: app_logout
