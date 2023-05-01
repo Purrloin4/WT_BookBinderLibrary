@@ -1,0 +1,25 @@
+<?php
+namespace App\Tests;
+
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+
+class DatabaseConnectionTest extends KernelTestCase
+{
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+
+    protected function setUp(): void
+    {
+        self::bootKernel();
+        $this->entityManager = self::$container->get(EntityManagerInterface::class);
+    }
+
+    public function testDatabaseConnection()
+    {
+        $connection = $this->entityManager->getConnection();
+        $this->assertTrue($connection->isConnected());
+    }
+}
