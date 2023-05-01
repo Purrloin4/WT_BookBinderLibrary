@@ -24,13 +24,8 @@ test-job:
  # a container with a temporary mysql db for running unit tests
  - mysql:8
  variables:
- # environment variables for configuring the mysql test database container
- #MYSQL_DATABASE: a22web41
- #MYSQL_USER: user
- #MYSQL_ROOT_PASSWORD: root_pass
- #MYSQL_PASSWORD: pass
- # set the correct DSN in Symfony to connect to the temporary database
-  DATABASE_URL: "mysql://mysql.studev.groept.be:7KSNL7nW@mysql/a22web41"
+  DATABASE_URL: "mysql://$MYSQL_USER:$MYSQL_PASSWORD@$MYSQL_HOST:$MYSQL_PORT/$MYSQL_DATABASE"
+
  # before starting the test scripts, add specific software to the container (only for this job)
  before_script:
  # mysql PDO needs to be installed as a PHP extension in the container for the tests to run
