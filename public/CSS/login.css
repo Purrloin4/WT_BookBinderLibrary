@@ -1,0 +1,20 @@
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+section{
+    display: flex;
+    flex-direction: column;
+    background-color: red;
+    align-items: center;
+    width: 50%;
+    padding-bottom: 40%;
+}
+
+.libraryImg{
+    height: 100vh;
+    width: 100vw;
+    background-image: url(../images/library.jpeg);
+    background-size: 100% ;
+}
