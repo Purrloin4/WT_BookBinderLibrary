@@ -24,7 +24,7 @@ test-job:
  # a container with a temporary mysql db for running unit tests
  - mysql:8
  variables:
-  DATABASE_URL: "mysql://$MYSQL_USER:$MYSQL_PASSWORD@mysql-test:$MYSQL_PORT/$MYSQL_USER"
+  DATABASE_URL: "mysql://runner:$MYSQL_ROOT_PASSWORD@localhost/$MYSQL_DATABASE"
 
  # before starting the test scripts, add specific software to the container (only for this job)
  before_script:
