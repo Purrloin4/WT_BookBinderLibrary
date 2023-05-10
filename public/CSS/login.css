@@ -48,5 +48,21 @@ section{
     left: 50%;
     transform: translate(-50%, -50%);
     align-items: center;
+}
+
+.loginBox input{
+    background: none;
+    padding: 10px;
+    border: 2px solid black;
+    border-radius: 5px;
+    outline: none;
+    font-family: 'Poppins', sans-serif;
 
 }
+
+/**
+.loginBox label{
+    position: relative;
+    left: 0;
+}
+**/
