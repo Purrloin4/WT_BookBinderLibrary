@@ -26,13 +26,12 @@ test-job:
  variables:
   MYSQL_ROOT_PASSWORD: NOT_OUR_ROOT_PW
   MYSQL_DATABASE: HELLO
-  MYSQL_PASSWORD: HI
   DATABASE_URL: "mysql://root:$MYSQL_ROOT_PASSWORD@mysql/$MYSQL_DATABASE"
 
  # before starting the test scripts, add specific software to the container (only for this job)
  before_script:
  # mysql PDO needs to be installed as a PHP extension in the container for the tests to run
- - docker-php-ext-install pdo pdo_mysql mbstring
+ - docker-php-ext-install pdo pdo_mysql
  script:
  - echo $DATABASE_URL
  - composer install
@@ -55,5 +54,6 @@ deploy-job:
 # we delete the files on the remote server that are not present in the local copy
     - rsync -rv --exclude=".git/"
                 --exclude=".env"
+                --exclude=".env.local"
                 --delete
                 ./ a22web41@shell.studev.groept.be:/var/www/html
