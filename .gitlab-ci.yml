@@ -27,7 +27,7 @@ test-job:
   MYSQL_ROOT_PASSWORD: NOT_OUR_ROOT_PW
   MYSQL_DATABASE: HELLO
   MYSQL_PASSWORD: HI
-  DATABASE_URL: "mysql://runner:HI@mysql/$MYSQL_DATABASE"
+  DATABASE_URL: "mysql://root:$MYSQL_ROOT_PASSWORD@mysql/$MYSQL_DATABASE"
 
  # before starting the test scripts, add specific software to the container (only for this job)
  before_script:
