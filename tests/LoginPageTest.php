@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Tests;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -11,7 +12,7 @@ class LoginPageTest extends WebTestCase
         $crawler = $client->request('GET', '/login');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Please sign in');
+        $this->assertSelectorTextContains('h1', 'Welcome!');
     }
 
     public function testLoginWithInvalidCredentials()
@@ -44,4 +45,3 @@ class LoginPageTest extends WebTestCase
         $this->assertResponseRedirects('/');
     }
 }
-
