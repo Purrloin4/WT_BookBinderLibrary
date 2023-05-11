@@ -139,8 +139,8 @@ body {
 }
 
 .book-slide {
-  overflow: clip;
   width: 100%;
+  overflow: hidden;
 }
 
 .book {
