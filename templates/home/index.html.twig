@@ -1,9 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Home{% endblock %}
 
-{% block body %}
-<div class="body">
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}"/>
+{% endblock %}
+
+{% block content %}
     <div class="book-slide">
         <div class="book js-flickity" data-flickity-options='{ "wrapAround": true }'>
             <div class="book-cell">
@@ -504,5 +508,4 @@
             </div>
         </div>
     </div>
-</div>
 {% endblock %}
