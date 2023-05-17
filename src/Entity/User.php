@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -31,6 +33,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 60)]
     private ?string $display_name = null;
+
+    #[ORM\OneToMany(mappedBy: 'sender', targetEntity: Friendship::class, orphanRemoval: true)]
+    private Collection $sentFriendships;
+
+    #[ORM\OneToMany(mappedBy: 'receiver', targetEntity: Friendship::class, orphanRemoval: true)]
+    private Collection $receivedFriendship;
+
+    public function __construct()
+    {
+        $this->sentFriendships = new ArrayCollection();
+        $this->receivedFriendship = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -110,6 +124,38 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setDisplayName(string $display_name): self
     {
         $this->display_name = $display_name;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Friendship>
+     */
+    public function getFriendships(): Collection
+    {
+        return new ArrayCollection(array_merge(
+            $this->sentFriendships->toArray(),
+            $this->receivedFriendship->toArray()));
+    }
+
+    public function addFriendship(Friendship $friendship): self
+    {
+        if (!$this->sentFriendships->contains($friendship)) {
+            $this->friendships->add($friendship);
+            $friendship->setSender($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFriendship(Friendship $friendship): self
+    {
+        // the friendship should be removed from the entity manager
+        if ($friendship->getSender() === $this) {
+            $this->sentFriendships->removeElement($friendship);
+        } else {
+            $this->receivedFriendship->removeElement($friendship);
+        }
 
         return $this;
     }
