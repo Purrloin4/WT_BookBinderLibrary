@@ -59,6 +59,13 @@ section{
 
 }
 
+button{
+    background: black;
+    border-radius: 5px;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+}
+
 /**
 .loginBox label{
     position: relative;
