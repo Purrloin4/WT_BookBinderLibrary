@@ -37,10 +37,10 @@
                     <input type="text" id="search" placeholder="Search Book" />
                 </div>
             </div>
-            <div class="header-title">Book<span>Binder</span></div>
+            <div class="header-title" onclick="window.location.href='{{ path('app_home') }}'">Book<span>Binder</span></div>
             <div class="profile">
                 <div class="user-profile">
-                    <img src="https://randomuser.me/api/portraits/women/63.jpg" alt="" class="user-img">
+                    <img onclick="window.location.href='{{ path('app_register') }}'" src="https://randomuser.me/api/portraits/women/63.jpg" alt="" class="user-img">
                 </div>
                 <div class="profile-menu">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">

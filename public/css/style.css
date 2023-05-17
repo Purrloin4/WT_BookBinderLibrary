@@ -95,6 +95,7 @@ body {
   font-size: 16px;
   font-weight: 400;
   margin-right: 120px;
+  cursor: pointer;
 }
 .header-title span {
   font-weight: 500;
