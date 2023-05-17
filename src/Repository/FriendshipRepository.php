@@ -43,11 +43,13 @@ class FriendshipRepository extends ServiceEntityRepository
     /**
      * @return Friendship[] Returns an array of Friendship objects
      */
-    public function findBySender(User $sender): array
+    public function findBySender(User $sender, bool $approved = false): array
     {
         return $this->createQueryBuilder('f')
             ->andWhere('f.sender = :sender')
+            ->andWhere('f.approved = :approved')
             ->setParameter('sender', $sender)
+            ->setParameter('approved', $approved)
             ->orderBy('f.id', 'ASC')
             ->getQuery()
             ->getResult()
@@ -57,11 +59,33 @@ class FriendshipRepository extends ServiceEntityRepository
     /**
      * @return Friendship[] Returns an array of Friendship objects
      */
-    public function findByReceiver(User $receiver): array
+    public function findByReceiver(User $receiver, bool $approved = false): array
     {
         return $this->createQueryBuilder('f')
             ->andWhere('f.receiver = :receiver')
+            ->andWhere('f.approved = :approved')
             ->setParameter('receiver', $receiver)
+            ->setParameter('approved', $approved)
+            ->orderBy('f.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @return Friendship[] Returns an array of Friendship objects
+     */
+    public function findByUser(User $user, bool $approved = true): array
+    {
+        $qb = $this->createQueryBuilder('f');
+
+        return $qb
+            ->andWhere($qb->expr()->orX(
+                $qb->expr()->eq('f.sender', ':user'),
+                $qb->expr()->eq('f.receiver', ':user')))
+            ->andWhere('f.approved = :approved')
+            ->setParameter('user', $user)
+            ->setParameter('approved', $approved)
             ->orderBy('f.id', 'ASC')
             ->getQuery()
             ->getResult()
