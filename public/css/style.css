@@ -45,7 +45,6 @@ body {
   height: 100vh;
   background-color: var(--page-bg-color);
   margin: 0 auto;
-  overflow: hidden;
   box-shadow: 0px 2px 50px 10px rgba(0, 0, 0, 0.21);
 }
 
@@ -140,6 +139,7 @@ body {
 }
 
 .book-slide {
+  overflow: clip;
   width: 100%;
 }
 
@@ -401,7 +401,7 @@ h1 {
   display: flex;
   flex-grow: 1;
   margin-top: 100px;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .books-of {
