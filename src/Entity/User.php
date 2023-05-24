@@ -55,8 +55,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->receivedFriendship = new ArrayCollection();
         $this->sendMessages = new ArrayCollection();
         $this->receivedMessages = new ArrayCollection();
-        $this->sendMessages = new ArrayCollection();
-        $this->receivedMessages = new ArrayCollection();
         $this->follows = new ArrayCollection();
     }
 
