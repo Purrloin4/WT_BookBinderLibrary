@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Message;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -37,6 +38,29 @@ class MessageRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    /**
+     * @return Message[] Returns an array of Message objects
+     */
+    public function findBySenderAndReceiver(User $sender, User $receiver): array
+    {
+        $qb = $this->createQueryBuilder('f');
+
+        return $qb
+            ->andWhere($qb->expr()->orX(
+                $qb->expr()->andX(
+                    $qb->expr()->eq('f.Sender', ':sender'),
+                    $qb->expr()->eq('f.Receiver', '.receiver')),
+                $qb->expr()->andX(
+                    $qb->expr()->eq('f.Sender', ':receiver'),
+                    $qb->expr()->eq('f.Receiver', '.sender'))))
+            ->setParameter('sender', $sender)
+            ->setParameter('receiver', $receiver)
+            ->orderBy('f.timestamp', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
 //    /**
