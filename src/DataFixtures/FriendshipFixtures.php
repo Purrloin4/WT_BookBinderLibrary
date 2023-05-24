@@ -1,6 +1,7 @@
 <?php
 
 namespace App\DataFixtures;
+namespace Faker\Factory;
 
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -21,6 +22,7 @@ class FriendshipFixtures extends Fixture
         $user2->setEmail($faker->email);
         $user2->setPassword($faker->password);
         $user2->setDisplayName($faker->name);
+
 
         $manager->flush();
     }
