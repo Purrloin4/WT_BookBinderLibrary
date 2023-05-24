@@ -11,7 +11,7 @@ Please list any related issue(s) this merge request addresses.
 Please describe how you have tested these changes.
 
 ## Checklist
-Add + if done, - if not applicable
+Add check (later) if done, - if not applicable
 - [ ] I have added tests to cover my changes
 - [ ] All new and existing tests passed
 - [ ] I have updated the documentation accordingly
