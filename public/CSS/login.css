@@ -59,6 +59,11 @@ section{
 
 }
 
+.alert-danger{
+    font-style: italic;
+    color: red;
+}
+
 button{
     background: black;
     border-radius: 5px;
