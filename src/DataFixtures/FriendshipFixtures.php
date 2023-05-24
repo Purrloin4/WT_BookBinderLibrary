@@ -1,8 +1,8 @@
 <?php
 
 namespace App\DataFixtures;
-namespace Faker\Factory;
 
+use Faker\Factory;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
