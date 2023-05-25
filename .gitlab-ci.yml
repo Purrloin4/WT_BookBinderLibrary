@@ -41,10 +41,17 @@ test-job:
  - php bin/console doctrine:fixtures:load -n
  # run the tests (using the temporary database)
  - php bin/phpunit
+ after_script:
+    - exit $EXIT_STATUS
 
 # Every job will start a container with a clone from the current repo
 deploy-job:
-# run this job only when there is a push on the master branch
+  # run this job only when there is a push on the master branch and after test-job ran sucessfully
+  stage: deploy
+  needs:
+    - job: test-job
+      artifacts: true
+
   only:
     - master
   script:
