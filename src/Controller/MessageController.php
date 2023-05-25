@@ -11,7 +11,7 @@ class MessageController extends AbstractController
     #[Route('/messages', name: 'app_messages')]
     public function viewMessages(): Response
     {
-        return $this->render('home/index.html.twig', [
+        return $this->render('messages.html.twig', [
             'controller_name' => 'MessageController',
         ]);
     }
