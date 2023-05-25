@@ -44,4 +44,18 @@ class LoginPageTest extends WebTestCase
 
         $this->assertResponseRedirects('/');
     }
+
+    public function testLoginWithValidCredentialsFAIL()
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/login');
+
+        $form = $crawler->selectButton('Sign in')->form();
+        $form['email'] = 'admin';
+        $form['password'] = 'patato';
+
+        $client->submit($form);
+
+        $this->assertResponseRedirects('/');
+    }
 }
