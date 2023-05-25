@@ -1,18 +1,4 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}BookBinder{% endblock %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/flickity/1.0.0/flickity.css'>
-    <link rel="stylesheet" href="{{ asset('css/home.css') }}"/>
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/flickity/1.0.0/flickity.pkgd.js'></script>
-{% endblock %}
+{% extends 'home/base.html.twig' %}
 
 {% block content %}
     <div class="book-slide">
