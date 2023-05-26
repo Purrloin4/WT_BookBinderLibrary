@@ -44,5 +44,4 @@ class LoginPageTest extends WebTestCase
 
         $this->assertResponseRedirects('/');
     }
-
 }
