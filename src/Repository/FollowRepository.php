@@ -2,7 +2,9 @@
 
 namespace App\Repository;
 
+use App\Entity\Book;
 use App\Entity\Follow;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -37,6 +39,38 @@ class FollowRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    /**
+     * @return Book[] Returns an array of Book objects
+     */
+    public function getUserFollows(User $user): array
+    {
+        $qb = $this->createQueryBuilder('f');
+
+        return $qb
+            ->andWhere($qb->expr()->eq('f.User', ':user'))
+            ->setParameter('user', $user)
+            ->orderBy('f.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @return User[] Returns an array of Book objects
+     */
+    public function getBookFollows(Book $book): array
+    {
+        $qb = $this->createQueryBuilder('f');
+
+        return $qb
+            ->andWhere($qb->expr()->eq('f.Book', ':book'))
+            ->setParameter('book', $book)
+            ->orderBy('f.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
 //    /**

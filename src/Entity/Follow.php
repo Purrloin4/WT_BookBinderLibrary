@@ -15,7 +15,7 @@ class Follow
 
     #[ORM\ManyToOne(inversedBy: 'follows')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
+    private ?User $User = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
@@ -28,12 +28,12 @@ class Follow
 
     public function getUser(): ?User
     {
-        return $this->user;
+        return $this->User;
     }
 
     public function setUser(?User $user): self
     {
-        $this->user = $user;
+        $this->User = $user;
 
         return $this;
     }
