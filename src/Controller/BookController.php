@@ -92,4 +92,12 @@ class BookController extends AbstractController
 
         return $this->redirectToRoute('book_show', ['id' => $book->getId()]);
     }
+
+    #[Route('/books', name: 'app_books')]
+    public function viewMessages(): Response
+    {
+        return $this->render('books.html.twig', [
+            'controller_name' => 'BookController',
+        ]);
+    }
 }
