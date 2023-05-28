@@ -12,6 +12,7 @@
 /composer.lock
 /drivers/
 /.idea/php.xml
+/.idea/jsLibraryMappings.xml
 
 ###< symfony/framework-bundle ###
 
