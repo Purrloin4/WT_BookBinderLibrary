@@ -47,6 +47,8 @@ class BookController extends AbstractController
             'book' => $book,
             'booktitle' => $bookTitle,
             'comments' =>  $commentMessages,
+        return $this->render('book/index.html.twig', [
+            'book' => $book,
             'commentForm' => $commentForm->createView(),
         ]);
     }
