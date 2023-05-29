@@ -26,7 +26,7 @@ class Message
     private ?string $message = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $timestamp = null;
+    private ?\DateTimeInterface $timestamp = new \DateTime();
 
     public function getId(): ?int
     {
