@@ -12,20 +12,20 @@
     <h3>Pending friend requests</h3>
     <ul>
         {% for f in pending %}
-            <li>{{ f->receiver->displayName|e }}</li>
+            <li>{{ f.receiver.displayName|e }}</li>
         {% endfor %}
     </ul>
 
     <h3>Incoming friend requests</h3>
     <ul>
         {% for f in incoming %}
-            <li>{{ f->sender->displayName|e }}</li>
+            <li>{{ f.sender.displayName|e }}</li>
         {% endfor %}
     </ul>
-    <h3>Freid list</h3>
+    <h3>Friend list</h3>
     <ul>
         {% for f in friends %}
-            <li>{{ f->displayName|e }}</li>
+            <li>{{ f.displayName|e }}</li>
         {% endfor %}
     </ul>
 </div>
