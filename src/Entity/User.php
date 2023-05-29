@@ -40,10 +40,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'receiver', targetEntity: Friendship::class, orphanRemoval: true)]
     private Collection $receivedFriendship;
 
+    #[ORM\OneToMany(mappedBy: 'Sender', targetEntity: Message::class)]
+    private Collection $sendMessages;
+
+    #[ORM\OneToMany(mappedBy: 'Receiver', targetEntity: Message::class)]
+    private Collection $receivedMessages;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Follow::class)]
+    private Collection $follows;
+
     public function __construct()
     {
         $this->sentFriendships = new ArrayCollection();
         $this->receivedFriendship = new ArrayCollection();
+        $this->sendMessages = new ArrayCollection();
+        $this->receivedMessages = new ArrayCollection();
+        $this->follows = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -138,7 +150,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             $this->receivedFriendship->toArray()));
     }
 
-    public function addFriendship(Friendship $friendship): self
+    public function addFriendship(Friendship $friendship): self // redundant gives warning so maybe remove @Sinyeol
     {
         if (!$this->sentFriendships->contains($friendship)) {
             $this->friendships->add($friendship);
@@ -155,6 +167,81 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             $this->sentFriendships->removeElement($friendship);
         } else {
             $this->receivedFriendship->removeElement($friendship);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Message>
+     */
+    public function getSendMessages(): Collection
+    {
+        return $this->sendMessages;
+    }
+
+    public function getReceivedMessages(): Collection
+    {
+        return $this->receivedMessages;
+    }
+
+    public function addSendMessage(Message $message): self
+    {
+        if (!$this->sendMessages->contains($message)) {
+            $this->sendMessages->add($message);
+            $message->setSender($this);
+        }
+
+        return $this;
+    }
+
+    public function addReceivedMessage(Message $message): self
+    {
+        if (!$this->receivedMessages->contains($message)) {
+            $this->receivedMessages->add($message);
+            $message->setSender($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessage(Message $message): self
+    {
+        if ($this->sendMessages->removeElement($message)) {
+            // set the owning side to null (unless already changed)
+            if ($message->getSender() === $this) {
+                $message->setMessage('This message was removed by: '.$this->display_name);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Follow>
+     */
+    public function getFollows(): Collection
+    {
+        return $this->follows;
+    }
+
+    public function addFollow(Follow $follow): self
+    {
+        if (!$this->follows->contains($follow)) {
+            $this->follows->add($follow);
+            $follow->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFollow(Follow $follow): self
+    {
+        if ($this->follows->removeElement($follow)) {
+            // set the owning side to null (unless already changed)
+            if ($follow->getUser() === $this) {
+                $follow->setUser(null);
+            }
         }
 
         return $this;
