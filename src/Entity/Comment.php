@@ -16,14 +16,14 @@ class Comment
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $Commenter = null;
+    private ?User $commenter = null;
 
     #[ORM\Column(length: 255)]
     private ?string $message = null;
 
     #[ORM\ManyToOne(targetEntity: Book::class, inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Book $Book = null;
+    private ?Book $book = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $timestamp = null;
@@ -43,12 +43,12 @@ class Comment
 
     public function getCommenter(): ?User
     {
-        return $this->Commenter;
+        return $this->commenter;
     }
 
-    public function setCommenter(User $Commenter): self
+    public function setCommenter(User $commenter): self
     {
-        $this->Commenter = $Commenter;
+        $this->commenter = $commenter;
 
         return $this;
     }
@@ -67,12 +67,12 @@ class Comment
 
     public function getBook(): ?Book
     {
-        return $this->Book;
+        return $this->book;
     }
 
-    public function setBook(Book $Book): self
+    public function setBook(Book $book): self
     {
-        $this->Book = $Book;
+        $this->book = $book;
 
         return $this;
     }
