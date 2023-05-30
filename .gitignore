@@ -8,18 +8,14 @@
 /public/bundles/
 /var/
 /vendor/
-/composer.json
-/composer.lock
-/drivers/
-/.idea/php.xml
-/.idea/jsLibraryMappings.xml
+
+
 
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
 .phpunit.result.cache
 /phpunit.xml
-
 ###< symfony/phpunit-bridge ###
 
 ###> friendsofphp/php-cs-fixer ###
