@@ -19,3 +19,8 @@
 /.php-cs-fixer.php
 /.php-cs-fixer.cache
 ###< friendsofphp/php-cs-fixer ###
+
+###> symfony/translation ###
+/.idea
+###< symfony/translation ###
+
