@@ -16,7 +16,7 @@ class BookFixtures extends Fixture
         $faker = Factory::create();
 
         $user1 = new User();
-        $user1->setEmail('hello@world.org');
+        $user1->setEmail('hello1@world.org');
         $user1->setPassword($faker->password());
         $user1->setDisplayName($faker->name());
 
@@ -29,6 +29,8 @@ class BookFixtures extends Fixture
         $book->addComment($comment);
 
         $manager->persist($book);
+        $manager->persist($comment);
+        $manager->persist($user1);
         $manager->flush();
     }
 }

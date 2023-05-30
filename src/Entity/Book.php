@@ -43,7 +43,7 @@ class Book
     }
 
     /**
-     * @return Collection|Comment[]
+     * @return Collection<>
      */
     public function getComments(): Collection
     {
