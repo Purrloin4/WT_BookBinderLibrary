@@ -6,6 +6,10 @@
 {#  Todo: book info ie. Cover, title, author, genre and description  #}
 
     <h2>Leave a Comment</h2>
-    {{ form(commentForm) }}
+
+    {{ form_start(commentForm) }}
+        {{ form_widget(commentForm) }}
+        <button type="submit" class="btn">Post comment</button>
+    {{ form_end(commentForm) }}
 
 {% endblock %}
