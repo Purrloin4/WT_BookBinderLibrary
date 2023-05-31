@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Book;
 use App\Entity\Comment;
 use App\Form\CommentType;
+use App\Form\EditCommentFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,5 +43,54 @@ class BookController extends AbstractController
         ]);
     }
 
-    // Todo: edit and delete comment
+    #[Route('/book/{id}/comment/{commentId}/edit', name: 'comment_edit')]
+    public function edit(Request $request, Book $book, int $commentId, EntityManagerInterface $entityManager): Response
+    {
+        $comment = $entityManager->getRepository(Comment::class)->find($commentId);
+
+        if (!$comment) {
+            throw $this->createNotFoundException('Comment not found');
+        }
+
+        $form = $this->createForm(EditCommentFormType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Save the updated comment to the database
+            $comment->setMessage($form->get('message')->getData());
+            $comment->setEdited(true);
+            // Persist the changes to the comment
+            $entityManager->persist($comment);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Comment updated successfully.');
+
+            return $this->redirectToRoute('book_show', ['id' => $book->getId()]);
+        }
+
+        return $this->render('book/index.html.twig', [
+            'book' => $book,
+            'editComment' => $comment,
+            'comments' => $entityManager->getRepository(Comment::class)->findAll($book->getId()),
+            'editingComment' => true,
+            'editCommentForm' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/book/{id}/comment/{commentId}/delete', name: 'comment_delete')]
+    public function delete(Request $request, Book $book, int $commentId, EntityManagerInterface $entityManager): Response
+    {
+        $comment = $entityManager->getRepository(Comment::class)->find($commentId);
+
+        if (!$comment) {
+            throw $this->createNotFoundException('Comment not found');
+        }
+
+        $entityManager->remove($comment);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Comment deleted successfully.');
+
+        return $this->redirectToRoute('book_show', ['id' => $book->getId()]);
+    }
 }
