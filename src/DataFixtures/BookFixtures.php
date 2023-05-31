@@ -25,7 +25,7 @@ class BookFixtures extends Fixture
         $comment->setCommenter($user1);
 
         $book = new Book();
-        $book->setIsbn('9781338878929'); // Faker doesn't generate working ISBNs unless we use a library like bibliothouris/isbn
+        $book->setIsbn($faker->isbn13());
         $book->addComment($comment);
 
         $manager->persist($book);
