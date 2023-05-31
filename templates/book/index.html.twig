@@ -9,16 +9,35 @@
     <h2>Comments</h2>
     {% for comment in comments %}
         <div>
+            {# checks if we are currently editing this comment, using its ID #}
+            {% if editingComment is defined and editingComment and comment.id == editComment.id %}
+                {{ form_start(editCommentForm) }}
+                {{ form_widget(editCommentForm) }}
+                <button type="submit" class="btn">Save</button>
+            {{ form_end(editCommentForm) }}
+        {% else %}
             {{ comment.message }}
+            {% if comment.edited %}
+                (edited)
+            {% endif %}
             {{ comment.commenter.displayName }}
             {{ comment.timestampFormatted }}
+
+            {% if comment.commenter == app.user %}
+                <a href="{{ path('comment_edit', {'id': book.id, 'commentId': comment.id}) }}">Edit</a>
+                <a href="{{ path('comment_delete', {'id': book.id, 'commentId': comment.id}) }}">Delete</a>
+            {% endif %}
+        {% endif %}
         </div>
     {% endfor %}
 
-    <h2>Leave a comment!</h2>
-    {{ form_start(commentForm) }}
+    {# Render the normal comment form only if not editing a comment #}
+    {% if editingComment is not defined or not editingComment %}
+        <h2>Leave a comment!</h2>
+        {{ form_start(commentForm) }}
         {{ form_widget(commentForm) }}
         <button type="submit" class="btn">Post comment</button>
-    {{ form_end(commentForm) }}
+        {{ form_end(commentForm) }}
+    {% endif %}
 
 {% endblock %}
