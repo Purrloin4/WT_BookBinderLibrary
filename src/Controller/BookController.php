@@ -33,23 +33,11 @@ class BookController extends AbstractController
             $this->addFlash('success', 'Your comment was added!');
         }
 
-        // Fetch the book title from the database
-        $bookTitle = $book->getTitle();
-
-        $commentMessages = [];
-        $book_id = $book->getId();
-        $comments = $entityManager->getRepository(Comment::class)->findAll($book_id);
-        foreach ($comments as $comment_item) {
-            $commentMessages[] = $comment_item->getMessage();
-        }
-
         return $this->render('book/index.html.twig', [
             'book' => $book,
-            'booktitle' => $bookTitle,
-            'comments' =>  $commentMessages,
             'commentForm' => $commentForm->createView(),
         ]);
     }
 
-    // TODO: edit and delete comment
+    // Todo: edit and delete comment
 }
