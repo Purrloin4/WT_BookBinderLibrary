@@ -6,8 +6,12 @@
 {#  Todo: book info ie. Cover, title, author, genre and description  #}
     <h2>Title</h2>
 
-    <h2>Leave a Comment</h2>
+    <h2>Comments</h2>
+    {% for comment in commentMessages %}
+        {{ comment }}
+    {% endfor %}
 
+    <h2>Leave a comment!</h2>
     {{ form_start(commentForm) }}
         {{ form_widget(commentForm) }}
         <button type="submit" class="btn">Post comment</button>
