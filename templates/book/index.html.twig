@@ -1,14 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ booktitle }}{% endblock %}
+{% block title %}Hello BookController!{% endblock %}
 
 {% block body %}
-{# TODO: book info ie. Cover, title, author, genre and description #}
-    <h1>{{ booktitle }}</h1>
+{#  Todo: book info ie. Cover, title, author, genre and description  #}
+
     <h2>Leave a Comment</h2>
-    {% for comment in comments %}
-    {{ comment }}
-    {% endfor %}
 
     {{ form_start(commentForm) }}
         {{ form_widget(commentForm) }}
