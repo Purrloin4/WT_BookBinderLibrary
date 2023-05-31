@@ -18,12 +18,8 @@ class Book
     #[ORM\Column(length: 255)]
     private ?string $isbn = null;
 
-    #[ORM\Column(length: 255)]
-    private string $title;
-
     #[ORM\OneToMany(mappedBy: 'Book', targetEntity: Comment::class)]
     private Collection $comments;
-
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -76,8 +72,4 @@ class Book
         return $this;
     }
 
-    public function getTitle(): string
-    {
-        return $this->title;
-    }
 }
