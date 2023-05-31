@@ -7,8 +7,12 @@
     <h2>Title</h2>
 
     <h2>Comments</h2>
-    {% for comment in commentMessages %}
-        {{ comment }}
+    {% for comment in comments %}
+        <div>
+            {{ comment.message }}
+            {{ comment.commenter.displayName }}
+            {{ comment.timestampFormatted }}
+        </div>
     {% endfor %}
 
     <h2>Leave a comment!</h2>
