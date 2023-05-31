@@ -82,6 +82,11 @@ class Comment
         return $this->timestamp;
     }
 
+    public function getTimestampFormatted(): string
+    {
+        return $this->timestamp->format('Y-m-d H:i:s');
+    }
+
     public function setEdited(): bool
     {
         $this->edited = true;
