@@ -16,7 +16,11 @@
                 {% if comment.edited %}
                     (edited)
                 {% endif %}
-                {{ comment.commenter.displayName }}
+                {% if app.user %}
+                    {{ comment.commenter.displayName }}
+                {% else %}
+                    <p><a href="{{ path('app_login') }}">Login</a> or <a href="{{ path('app_register') }}">Register</a> to view the commenters name.</p>
+                {% endif %}
                 {{ comment.timestampFormatted }}
 
                 {% if comment.commenter == app.user %}
