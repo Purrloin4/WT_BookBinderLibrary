@@ -32,9 +32,11 @@
     {% endfor %}
 
     {# Render the normal comment form only if not editing a comment #}
-    {% if editingComment is not defined or not editingComment %}
-        <h2>Leave a comment!</h2>
-        {{ form(commentForm) }}
+    {%  if app.user %}
+        {% if editingComment is not defined or not editingComment %}
+            <h2>Leave a comment!</h2>
+            {{ form(commentForm) }}
+        {% endif %}
     {% endif %}
 
 {% endblock %}
