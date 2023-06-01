@@ -59,7 +59,6 @@ deploy-job:
   only:
     - master
   script:
-    - composer install
 # rsync is a copy/sync tool we use to copy the current folder ./ to studev
 # we ignore the .git folder and the .env file
 # we delete the files on the remote server that are not present in the local copy
@@ -69,3 +68,4 @@ deploy-job:
                 --exclude="var/"
                 --delete
                 ./ a22web41@shell.studev.groept.be:/var/www/html
+    - ssh a22web41@shell.studev.groept.be 'cd /var/www/html; composer install'
