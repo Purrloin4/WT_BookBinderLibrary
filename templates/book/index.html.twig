@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello BookController!{% endblock %}
+
+{% block body %}
+    {#  Todo: book info ie. Cover, title, author, genre and description  #}
+
+    <h2>Comments</h2>
+    {% for comment in comments %}
+        <div>
+            {# checks if we are currently editing this comment, using its ID #}
+            {% if editingComment is defined and editingComment and comment.id == editComment.id %}
+                {{ form(editCommentForm) }}
+            {% else %}
+                {{ comment.message }}
+                {% if comment.edited %}
+                    (edited)
+                {% endif %}
+                {% if app.user %}
+                    {{ comment.commenter.displayName }}
+                {% else %}
+                    <p><a href="{{ path('app_login') }}">Login</a> or <a href="{{ path('app_register') }}">Register</a> to view the commenters name.</p>
+                {% endif %}
+                {{ comment.timestampFormatted }}
+
+                {% if comment.commenter == app.user %}
+                    <a href="{{ path('comment_edit', {'id': book.id, 'commentId': comment.id}) }}">Edit</a>
+                    <a href="{{ path('comment_delete', {'id': book.id, 'commentId': comment.id}) }}">Delete</a>
+                {% endif %}
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    {# Render the normal comment form only if not editing a comment #}
+    {%  if app.user %}
+        {% if editingComment is not defined or not editingComment %}
+            <h2>Leave a comment!</h2>
+            {{ form(commentForm) }}
+        {% endif %}
+    {% endif %}
+
+{% endblock %}

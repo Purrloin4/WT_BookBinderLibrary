@@ -49,6 +49,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Follow::class)]
     private Collection $follows;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Comment::class)]
+    private Collection $comments;
+
     public function __construct()
     {
         $this->sentFriendships = new ArrayCollection();
@@ -246,4 +249,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    /**
+     * @param Collection $comments
+     */
+    public function setComments(Collection $comments): void
+    {
+        $this->comments = $comments;
+    }
+
+
 }
