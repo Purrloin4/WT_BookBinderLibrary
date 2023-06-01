@@ -45,7 +45,7 @@ body {
   height: 100vh;
   background-color: var(--page-bg-color);
   margin: 0 auto;
-  box-shadow: 0px 2px 50px 10px rgba(0, 0, 0, 0.21);
+  box-shadow: 0 2px 50px 10px rgba(0, 0, 0, 0.21);
 }
 
 .header {
@@ -121,10 +121,9 @@ body {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  border: 2px solid var(--theme-bg-color);
   right: 12px;
   top: -3px;
-  border: 2px solid #fff;
+
 }
 
 .profile {
@@ -205,7 +204,7 @@ body {
   bottom: -35px;
   left: 35px;
   border-radius: 2px;
-  box-shadow: -2px 6px 19px 0px #7f818e;
+  box-shadow: -2px 6px 19px 0 #7f818e;
   transition: 0.3s ease;
 }
 .book-photo:hover {
@@ -266,7 +265,7 @@ h1 {
   margin-right: 5px;
   margin-top: 10px;
   font-size: 0.9em;
-  font-family: FontAwesome;
+  font-family: FontAwesome, serif;
   display: inline-block;
   content: "";
 }
@@ -357,6 +356,21 @@ h1 {
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+}
+
+.login_button, .register_button {
+  background-color: #fbadaf;
+  color: #fff;
+  border-radius: 20px;
+  padding: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  width: 100px;
+}
+
+.login_button:hover, .register_button:hover{
+  background-color: #ff6e72;
 }
 
 .book-see {
@@ -455,7 +469,7 @@ h1 {
   transition: 0.2s;
 }
 .book-type.active, .book-type:hover {
-  -webkit-text-stroke: 0.3px;
+  -webkit-text-stroke: inherit;
 }
 .book-type.active:before, .book-type:hover:before {
   content: "";
@@ -465,7 +479,7 @@ h1 {
   bottom: -17px;
   right: 15px;
   background-color: #67d4ea;
-  box-shadow: 0px -1px 5px 0px #67d4ea;
+  box-shadow: 0 -1px 5px 0 #67d4ea;
 }
 .book-type:nth-child(2):before {
   right: 12px;
@@ -569,7 +583,7 @@ h1 {
   height: 243.219px;
   margin-top: -35px;
   border-radius: 2px;
-  box-shadow: 0px 1px 7px 2px #c7c9d3;
+  box-shadow: 0 1px 7px 2px #c7c9d3;
   border-bottom: 1px solid #dcddde;
   object-fit: cover;
   margin-bottom: 20px;
@@ -644,7 +658,6 @@ h1 {
 .content-wrapper:before {
   content: "";
   position: absolute;
-  background-color: #8f98a9;
   background-color: #aaaebc;
   box-shadow: 0 -6px 0 0 #aaaebc, 0 6px 0 0 #aaaebc;
   width: 4px;
