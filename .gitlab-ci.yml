@@ -69,3 +69,4 @@ deploy-job:
                 --delete
                 ./ a22web41@shell.studev.groept.be:/var/www/html
     - ssh a22web41@shell.studev.groept.be 'cd /var/www/html; composer install'
+    - ssh a22web41@shell.studev.groept.be 'cd /var/www/html; php bin/console doctrine:migrations:migrate --no-interaction'
