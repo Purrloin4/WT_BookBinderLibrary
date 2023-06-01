@@ -3,11 +3,10 @@
 {% block content %}
     <div class="book-slide">
         <div class="book js-flickity" data-flickity-options='{ "wrapAround": true }'>
-            <div class="book-cell">
             {% for book in sliding_books %}
             <div class="book-cell" data-isbn={{ book.isbn }}>
                 <div class="book-img">
-                    <img src="https://images-na.ssl-images-amazon.com/images/I/81WcnNQ-TBL.jpg" alt="" class="book-photo">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="book cover placeholder" class="book-photo">
                 </div>
                 <div class="book-content">
                     <div class="book-title">Book Title</div>
@@ -25,7 +24,7 @@
                 <div class="author-title">Books of the year</div>
                 {% for book in year_books %}
                 <div class="year-book" data-isbn="{{ book.isbn }}">
-                    <img src="https://images-na.ssl-images-amazon.com/images/I/A1kNdYXw0GL.jpg" alt="" class="year-book-img">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="book cover placeholder" class="year-book-img">
                     <div class="year-book-content">
                         <div class="year-book-name">Book Title Placeholder</div>
                         <div class="year-book-author">by <span>Author's Name Placeholder</span></div>
@@ -43,7 +42,7 @@
                 {% for book in popular_books %}
                 <div class="book-card" data-isbn="{{ book.isbn }}">
                     <div class="content-wrapper">
-                        <img src="https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F6%2F2019%2F07%2Fchances-are-1-2000.jpg&q=85" alt="" class="book-card-img">
+                        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="book cover placeholder" class="book-card-img">
                         <div class="card-content">
                             <div class="book-name">Changes Are</div>
                             <div class="book-by">by <span>Richard Russo</span></div>
