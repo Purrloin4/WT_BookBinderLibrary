@@ -14,37 +14,7 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/flickity/1.0.0/flickity.pkgd.js'></script>
 {% endblock %}
 
-{% block body %}
-<body class="book-store">
-    <header>
-        <label for="search"></label>
-        <input class="browse" type="text" id="search" placeholder="Search Book" />
-        <h1 class="header-title" onclick="window.location.href='{{ path('app_home') }}'">Book<span>Binder</span></h1>
-        <div class="profile">
-            {% if app.user %}
-                <div class="user-profile">
-                    <img onclick="window.location.href='{{ path('app_register') }}'" src="https://randomuser.me/api/portraits/women/63.jpg" alt="" class="user-img">
-                </div>
-            {% else %}
-                <div class="login_register_buttons">
-                    <a href="{{ path('app_login') }}">
-                        <button class="login_button" type="button">Login</button>
-                    </a>
-                    <a href="{{ path('app_register') }}">
-                        <button class="register_button" type="button">Register</button>
-                    </a>
-
-                </div>
-            {% endif %}
-            <div class="profile-menu">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
-                    <path d="M3 12h18M3 6h18M3 18h18" /></svg>
-                Menu
-            </div>
-        </div>
-    </header>
-
-    {% block content %}
+{% block content %}
     <main>
         <div class="book-slide">
             <div class="book js-flickity" data-flickity-options='{ "wrapAround": true }'>
@@ -114,11 +84,11 @@
             </div>
         </div>
     </main>
-    {% endblock %}
-</body>
-
-    <script src="{{ asset('js/home.js') }}"></script>
+        <script src="{{ asset('js/home.js') }}"></script>
 {% endblock %}
+
+
+
 
 
 
