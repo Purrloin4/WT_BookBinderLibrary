@@ -18,6 +18,13 @@ class Book
     #[ORM\Column(length: 255)]
     private ?string $isbn = null;
 
+    #[ORM\OneToMany(mappedBy: 'Book', targetEntity: Comment::class)]
+    private Collection $comments;
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -34,4 +41,35 @@ class Book
 
         return $this;
     }
+
+    /**
+     * @return Collection<>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setBook($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getBook() === $this) {
+                $comment->setBook(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

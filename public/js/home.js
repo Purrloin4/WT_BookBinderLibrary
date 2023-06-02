@@ -1,46 +1,83 @@
-const bookItems = document.getElementsByClassName('bookItem')
-const infoItem = document.getElementByClassName('info-text')
-const isbn13s = {{ isbn13s|json_encode|raw }};
+// Fetch book API for sliding books
+document
+  .querySelectorAll('.book-slide .book-cell')
+  .forEach(book => {
+    var isbn = book.dataset.isbn;
+    fetch(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&jscmd=data&format=json`)
+      .then(res => res.json())
+      .then(data => {
+        data = Object.values(data)[0];
+        // set the cover image
+        if (data.cover) {
+          book_photo = book.querySelector('img.book-photo');
+          book_photo.src =
+            data.cover.large
+            || data.cover.medium
+            || data.cover.small;
+          book_photo.alt = `cover image for the book ${data.title}`;
+        }
 
-for (const book of bookItems) {
-    book.addEventListener('click', updateReference)
-}
+        // set the title
+        book.querySelector('div.book-title').textContent = data.title;
 
-function updateReference(event) {
-    let isbn = event.target.dataset.isbn
-    fetch(`https://openlibrary.org/isbn/${isbn}.json`)
-        .then((response) => {
-            if (response.ok) return response.json()
-            else throw new Error('not found')
-        })
-        .then((result) => {
-            console.log(result)
-            infoItem.innerHTML = `published on ${result.publish_date} (${result.number_of_pages} pages)`
-        })
-        .catch(error => infoItem.innerHTML = "No extra info found")
-}
+        // set author
+        book.querySelector('div.book-author > span').textContent
+          = data.authors[0].name;
+      });
+  });
 
+// Fetch book API for books of the year
+document
+  .querySelectorAll('.books-of > .week.year > .year-book')
+  .forEach(book => {
+    var isbn = book.dataset.isbn;
+    fetch(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&jscmd=data&format=json`)
+      .then(res => res.json())
+      .then(data => {
+        data = Object.values(data)[0];
+        // set the cover image
+        if (data.cover) {
+          img = book.querySelector('img.year-book-img');
+          img.src =
+            data.cover.large
+            || data.cover.medium
+            || data.cover.small;
+          img.alt = `cover image for the book ${data.title}`;
+        }
 
-for (const isbn13 of isbn13s) {
-    fetchBookInformation(isbn13);
-}
+        // set the title
+        book.querySelector('div.year-book-name').textContent = data.title;
 
-function fetchBookInformation(isbn13) {
-    fetch(`https://openlibrary.org/isbn/${isbn13}.json`)
-        .then(response => response.ok ? response.json() : Promise.reject('not found'))
-        .then(bookData => {
-            const bookCard = document.querySelector(`.book-card[data-isbn="${isbn13}"]`);
-            if (bookCard) {
-                const bookNameElement = bookCard.querySelector('.book-name');
-                const bookAuthorElement = bookCard.querySelector('.book-by');
-                const bookRateElement = bookCard.querySelector('.rate');
-                const bookSumElement = bookCard.querySelector('.book-sum');
+        // set author
+        book.querySelector('div.year-book-author > span').textContent
+          = data.authors[0].name;
+      });
+  });
 
-                bookNameElement.textContent = bookData.title ?? '';
-                bookAuthorElement.textContent = bookData.authors ? bookData.authors[0].name : '';
-                bookRateElement.textContent = bookData.rating?.average ?? '';
-                bookSumElement.textContent = bookData.description?.value ?? '';
-            }
-        })
-        .catch(error => console.error(error));
-}
+// Fetch book API for popular books
+document
+  .querySelectorAll('.popular-books .book-card')
+  .forEach(book => {
+    var isbn = book.dataset.isbn;
+    fetch(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&jscmd=data&format=json`)
+      .then(res => res.json())
+      .then(data => {
+        data = Object.values(data)[0];
+        // set the cover image
+        if (data.cover) {
+          img = book.querySelector('img.book-card-img');
+          img.src =
+            data.cover.large
+            || data.cover.medium
+            || data.cover.small;
+          img.alt = `cover image for the book ${data.title}`;
+        }
+
+        // set the title
+        book.querySelector('div.book-name').textContent = data.title;
+
+        // set author
+        book.querySelector('div.book-by > span').textContent
+          = data.authors[0].name;
+      });
+  });

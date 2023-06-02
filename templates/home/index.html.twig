@@ -1,44 +1,72 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}BookBinder{% endblock %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('css/home.css') }}"/>
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('js/home.js') }}"></script>
-{% endblock %}
+{% extends 'home/base.html.twig' %}
 
 {% block content %}
-    <div class="home-recommend">
-        {% for isbn in recommend %}
-            <div class="book-card">
-                <div class="content-wrapper">
-                    <img src="{{ bookinfo.getBookCover(isbn) }}" alt="" class="book-card-img">
-                    <div class="card-content">
-                        <div class="book-name">{{ bookinfo.getBookTitle(isbn) }}</div>
-                        <div class="book-by">{{ bookinfo.getBookAuthor(isbn) }}</div>
-                        <div class="book-rate">{{ bookinfo.getBookRate(isbn) }}</div>
-                        <div class="book-sum">{{ bookinfo.getBookSummary(isbn) }}</div>
+    <div class="book-slide">
+        <div class="book js-flickity" data-flickity-options='{ "wrapAround": true }'>
+            {% for book in sliding_books %}
+            <div class="book-cell" data-isbn={{ book.isbn }}>
+                <div class="book-img">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="book cover placeholder" class="book-photo">
+                </div>
+                <div class="book-content">
+                    <div class="book-title">Book Title</div>
+                    <div class="book-author">by <span class="name">Name of the Author</span></div>
+                    {# FIXME: implement book description page #}
+                    <a href="#"><div class="book-see" >See The Book</div></a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="main-wrapper">
+        <div class="books-of">
+            <div class="week year">
+                <div class="author-title">Books of the year</div>
+                {% for book in year_books %}
+                <div class="year-book" data-isbn="{{ book.isbn }}">
+                    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="book cover placeholder" class="year-book-img">
+                    <div class="year-book-content">
+                        <div class="year-book-name">Book Title Placeholder</div>
+                        <div class="year-book-author">by <span>Author's Name Placeholder</span></div>
                     </div>
                 </div>
-                {#                <div class="likes">#}
-                {#                    <div class="like-profile">#}
-                {#                        {% for user_id in likers %}#}
-                {#                            <img src="{{ get3UserProfilePicture(user_id) }}" alt="" class="like-img">#}
-                {#                        {% endfor %}#}
-                {#                    </div>#}
-                {#                    <div class="like-name">#}
-                {#                        {% for user_id in likers %}#}
-                {#                            <div><span>{{ get3UserDisplayName(user_id) }}</span></div>#}
-                {#                        {% endfor %}#}
-                {#                        {{ getLikeCount(isbn) }} friends liked this.#}
-                {#                    </div>#}
-                {#                </div>#}
+                {% endfor %}
             </div>
-        {% endfor %}
+            <div class="overlay"></div>
+        </div>
+        <div class="popular-books">
+            <div class="main-menu">
+                <div class="genre">Popular Books</div>
+            </div>
+            <div class="book-cards">
+                {% for book in popular_books %}
+                <div class="book-card" data-isbn="{{ book.isbn }}">
+                    <div class="content-wrapper">
+                        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="book cover placeholder" class="book-card-img">
+                        <div class="card-content">
+                            <div class="book-name">Changes Are</div>
+                            <div class="book-by">by <span>Richard Russo</span></div>
+                        </div>
+                    </div>
+                    {# FIXME: Show book followers briefly #}
+                    {#
+                    <div class="likes">
+                        <div class="like-profile">
+                            <img src="" alt="" class="like-img">
+                        </div>
+                        <div class="like-profile">
+                            <img src="" alt="" class="like-img">
+                        </div>
+                        <div class="like-profile">
+                            <img src="" alt="" class="like-img">
+                        </div>
+                        <div class="like-name"><span class="name">Name placeholder</span> and <span class="suj>2 other friends</span> like this</div>
+                    </div>
+                    #}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
+    <script src="{{ asset('js/home.js') }}" />
 {% endblock %}
