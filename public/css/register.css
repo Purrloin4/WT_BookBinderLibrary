@@ -1,0 +1,25 @@
+.row{
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Poppins', sans-serif;
+}
+
+.row input{
+    margin: 10px;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: black;
+    font-family: 'Poppins', sans-serif;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: black;
+    opacity: 1; /* Firefox */
+    font-family: 'Poppins', sans-serif;
+}

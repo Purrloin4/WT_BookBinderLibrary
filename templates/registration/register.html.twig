@@ -5,21 +5,37 @@
 {% block stylesheets %}
     {{ parent() }}
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/login_and_register.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/register.css') }}" />
 {% endblock %}
 
 {% block body %}
+    <section class="back"></section>
     <section class="register_info">
-        <h1>Register</h1>
-        {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.displayName) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-
-        <button type="submit" class="btn">Register</button>
-        {{ form_end(registrationForm) }}
+        <section class="register_box">
+            {{ form_start(registrationForm) }}
+            <div class="row">
+                <h1>Register</h1>
+                <input
+                        name="{{ field_name(registrationForm.email) }}"
+                        value="{{ field_value(registrationForm.email) }}"
+                        placeholder="{{ field_label(registrationForm.email) }}"
+                />
+                <input
+                        name="{{ field_name(registrationForm.displayName) }}"
+                        value="{{ field_value(registrationForm.displayName) }}"
+                        placeholder="{{ field_label(registrationForm.displayName) }}"
+                />
+                <input
+                        name="{{ field_name(registrationForm.plainPassword) }}"
+                        value="{{ field_value(registrationForm.plainPassword) }}"
+                        placeholder="{{ field_label(registrationForm.plainPassword) }}"
+                />
+                {{ form_row(registrationForm.agreeTerms) }}
+                <br>
+                <button type="submit" class="btn">Register</button>
+            </div>
+            {{ form_end(registrationForm) }}
+        </section>
     </section>
 {% endblock %}
