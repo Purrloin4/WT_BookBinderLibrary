@@ -358,6 +358,10 @@ h1 {
   -webkit-box-orient: vertical;
 }
 
+a:link{
+  text-decoration: none;
+}
+
 .login_button, .register_button {
   background-color: #fbadaf;
   color: #fff;
@@ -366,7 +370,7 @@ h1 {
   font-size: 14px;
   font-weight: 600;
   border: none;
-  width: 100px;
+  width: 110px;
 }
 
 .login_button:hover, .register_button:hover{
