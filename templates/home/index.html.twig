@@ -60,7 +60,7 @@
                         <div class="book-title">Book Title</div>
                         <div class="book-author">by <span class="name">Name of the Author</span></div>
                         {# FIXME: implement book description page #}
-                        <a href="#"><div class="book-see" >See The Book</div></a>
+                        <a href="{{ path('book_show', {'id':book.id}) }}"><div class="book-see" >See The Book</div></a>
                     </div>
                 </div>
                 {% endfor %}
