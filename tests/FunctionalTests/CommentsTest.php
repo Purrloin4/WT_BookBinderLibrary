@@ -7,6 +7,21 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class CommentsTest extends WebTestCase
 {
+    public function testUnauthorizedDeleteComment(): void
+    {
+        $client = static::createClient();
+        // Simulate logging in a different user
+        $userRepository = $client->getContainer()->get('doctrine')->getRepository(User::class);
+        $user = $userRepository->findOneBy(['email' => 'anotheruser@test.com']);
+        $client->loginUser($user);
+
+        $commentId = 1; // Set the comment ID to the ID of the comment you want to test
+
+        $client->request('GET', sprintf('/book/1/comment/%d/delete', $commentId));
+
+        $response = $client->getResponse();
+        $this->assertEquals(403, $response->getStatusCode());
+    }
     public function testAddComment(): void
     {
         $client = static::createClient();
