@@ -33,9 +33,10 @@ body {
   margin: 0;
 }
 
-.likes, .year-book, .author, .main-menu, .profile-menu, .profile, .browse-category, .browse, .header {
+.likes, .year-book, .author, .main-menu, .profile-menu, .profile, .browse-category, .browse, header {
   display: flex;
   align-items: center;
+  position: relative;
 }
 
 .book-store {
@@ -48,7 +49,7 @@ body {
   box-shadow: 0 2px 50px 10px rgba(0, 0, 0, 0.21);
 }
 
-.header {
+header {
   height: 70px;
   width: 100%;
   background-color: #ffffff;
@@ -60,10 +61,7 @@ body {
   flex-shrink: 0;
 }
 
-.search-bar {
-  position: relative;
-}
-.search-bar input {
+input.browse{
   height: 100%;
   width: 100%;
   display: block;
@@ -78,7 +76,7 @@ body {
   color: var(--body-color);
   font-family: var(--body-font);
 }
-.search-bar input::placeholder {
+input.browse::placeholder {
   color: var(--placeholder);
 }
 
@@ -543,7 +541,7 @@ a:link{
 .year-book-author {
   font-size: 13px;
 }
-.year-book + .year-book {
+.year-book{
   margin-top: 20px;
 }
 

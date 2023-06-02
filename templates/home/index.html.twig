@@ -15,14 +15,11 @@
 {% endblock %}
 
 {% block body %}
-<div class="book-store">
-    <div class="header">
-        <div class="browse">
-            <div class="search-bar">
-                <input type="text" id="search" placeholder="Search Book" />
-            </div>
-        </div>
-        <div class="header-title" onclick="window.location.href='{{ path('app_home') }}'">Book<span>Binder</span></div>
+<body class="book-store">
+    <header>
+        <label for="search"></label>
+        <input class="browse" type="text" id="search" placeholder="Search Book" />
+        <h1 class="header-title" onclick="window.location.href='{{ path('app_home') }}'">Book<span>Binder</span></h1>
         <div class="profile">
             {% if app.user %}
                 <div class="user-profile">
@@ -45,7 +42,7 @@
                 Menu
             </div>
         </div>
-    </div>
+    </header>
 
     {% block content %}
     <main>
@@ -67,7 +64,7 @@
             </div>
         </div>
         <div class="main-wrapper">
-            <div class="books-of">
+            <section class="books-of">
                 <div class="week year">
                     <div class="author-title">Books of the year</div>
                     {% for book in year_books %}
@@ -81,7 +78,7 @@
                     {% endfor %}
                 </div>
                 <div class="overlay"></div>
-            </div>
+            </section>
             <div class="popular-books">
                 <div class="main-menu">
                     <div class="genre">Popular Books</div>
@@ -118,7 +115,7 @@
         </div>
     </main>
     {% endblock %}
-</div>
+</body>
 
     <script src="{{ asset('js/home.js') }}"></script>
 {% endblock %}
