@@ -15,7 +15,7 @@ class CommentsTest extends WebTestCase
         $user = $userRepository->findOneBy(['email' => 'anotheruser@test.com']);
         $client->loginUser($user);
 
-        $commentId = 1; // Set the comment ID to the ID of the comment you want to test
+        $commentId = 1;
 
         $client->request('GET', sprintf('/book/1/comment/%d/delete', $commentId));
 
