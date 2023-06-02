@@ -1,38 +1,39 @@
+{# book/index.html.twig #}
+
 {% extends 'base.html.twig' %}
 
 {% block title %}Hello BookController!{% endblock %}
 
 {% block body %}
-{#  Todo: book info ie. Cover, title, author, genre and description  #}
     <h2>Title</h2>
 
     <h2>Comments</h2>
     {% for comment in comments %}
         <div>
-            {# checks if we are currently editing this comment, using its ID #}
-            {% if editingComment is defined and editingComment and comment.id == editComment.id %}
-                {{ form_start(editCommentForm) }}
-                {{ form_widget(editCommentForm) }}
-                <button type="submit" class="btn">Save</button>
-            {{ form_end(editCommentForm) }}
-        {% else %}
-            {{ comment.message }}
-            {% if comment.edited %}
-                (edited)
-            {% endif %}
-            {{ comment.commenter.displayName }}
-            {{ comment.timestampFormatted }}
+            {% if comment.id == editingCommentId %}
+                {# Render the edit form for the current comment being edited #}
+                <form class="edit-comment-form" data-comment-id="{{ comment.id }}">
+                    {{ form_widget(editCommentForm) }}
+                    <button type="submit" class="btn">Save</button>
+                </form>
+            {% else %}
+                {{ comment.message }}
+                {% if comment.edited %}
+                    (edited)
+                {% endif %}
+                {{ comment.commenter.displayName }}
+                {{ comment.timestampFormatted }}
 
-            {% if comment.commenter == app.user %}
-                <a href="{{ path('comment_edit', {'id': book.id, 'commentId': comment.id}) }}">Edit</a>
-                <a href="{{ path('comment_delete', {'id': book.id, 'commentId': comment.id}) }}">Delete</a>
+                {% if comment.commenter == app.user %}
+                    <a href="#" class="edit-comment-btn" data-comment-id="{{ comment.id }}">Edit</a>
+                    <a href="{{ path('comment_delete', {'id': book.id, 'commentId': comment.id}) }}">Delete</a>
+                {% endif %}
             {% endif %}
-        {% endif %}
         </div>
     {% endfor %}
 
     {# Render the normal comment form only if not editing a comment #}
-    {% if editingComment is not defined or not editingComment %}
+    {% if editingCommentId is not defined %}
         <h2>Leave a comment!</h2>
         {{ form_start(commentForm) }}
         {{ form_widget(commentForm) }}
@@ -40,4 +41,51 @@
         {{ form_end(commentForm) }}
     {% endif %}
 
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        // Handle editing comment functionality
+        const editCommentButtons = document.querySelectorAll('.edit-comment-btn');
+        const editCommentForms = document.querySelectorAll('.edit-comment-form');
+
+        editCommentButtons.forEach((button) => {
+            button.addEventListener('click', (event) => {
+                event.preventDefault();
+                const commentId = event.target.dataset.commentId;
+
+                // Hide all other edit forms
+                editCommentForms.forEach((form) => {
+                    form.style.display = 'none';
+                });
+
+                // Show the selected edit form
+                const editForm = document.querySelector(`form[data-comment-id="${commentId}"]`);
+                editForm.style.display = 'block';
+            });
+        });
+
+        // Handle submitting edit comment forms using AJAX
+        const editCommentFormsArray = Array.from(editCommentForms);
+
+        editCommentFormsArray.forEach((form) => {
+            form.addEventListener('submit', (event) => {
+                event.preventDefault();
+                const commentId = form.dataset.commentId;
+                const formData = new FormData(form);
+
+                fetch(`{{ path('comment_edit', {'id': book.id, 'commentId': 'COMMENT_ID'}) }}`.replace('COMMENT_ID', commentId), {
+                    method: 'POST',
+                    body: formData,
+                })
+                    .then(response => response.text())
+                    .then(html => {
+                        // Replace the edited comment with the updated HTML
+                        const commentContainer = document.querySelector(`div[data-comment-id="${commentId}"]`);
+                        commentContainer.innerHTML = html;
+                    });
+            });
+        });
+    </script>
 {% endblock %}

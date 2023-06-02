@@ -46,12 +46,60 @@ class BookController extends AbstractController
         return $this->render('book/index.html.twig', [
             'book' => $book,
             'booktitle' => $bookTitle,
-            'comments' =>  $commentMessages,
-        return $this->render('book/index.html.twig', [
-            'book' => $book,
+            'comments' => $commentMessages,
             'commentForm' => $commentForm->createView(),
+            'controller_name' => 'BookController',
         ]);
     }
 
     // TODO: edit and delete comment
+    #[Route('/book/{id}/comment/{comment_id}/edit', name: 'comment_edit')]
+    private function editComment(Request $request, Comment $comment, EntityManagerInterface $entityManager): Response
+    {
+        // Create a form for editing the comment
+        $editForm = $this->createForm(CommentType::class, $comment);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $comment->setMessage($editForm->get('message')->getData());
+
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Comment updated successfully!');
+            // Redirect to the appropriate page after editing the comment
+            return $this->redirectToRoute('book_show', ['id' => $comment->getBook()->getId()]);
+        }
+
+        // Render the form for editing the comment
+        return $this->render('book/edit_comment.html.twig', [
+            'commentForm' => $editForm->createView(),
+            'comment' => $comment,
+        ]);
+    }
+
+    #[Route('/book/{id}/comment/{comment_id}/delete', name: 'comment_delete')]
+    private function deleteComment(Request $request, Comment $comment, EntityManagerInterface $entityManager): Response
+    {
+        // Create a form for deleting the comment
+        $deleteForm = $this->createFormBuilder()
+            ->setAction($this->generateUrl('book_delete_comment', ['id' => $comment->getBook()->getId(), 'comment_id' => $comment->getId()]))
+            ->setMethod('DELETE')
+            ->getForm();
+        $deleteForm->handleRequest($request);
+
+        if ($deleteForm->isSubmitted() && $deleteForm->isValid()) {
+            $entityManager->remove($comment);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Comment deleted successfully!');
+            // Redirect to the appropriate page after deleting the comment
+            return $this->redirectToRoute('book_show', ['id' => $comment->getBook()->getId()]);
+        }
+
+        // Render the form for deleting the comment
+        return $this->render('book/delete_comment.html.twig', [
+            'deleteForm' => $deleteForm->createView(),
+            'comment' => $comment,
+        ]);
+    }
 }
