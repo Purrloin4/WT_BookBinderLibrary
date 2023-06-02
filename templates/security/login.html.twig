@@ -12,14 +12,8 @@
 
 {% block body %}
 
-    <section class="back">
-
-    </section>
-
-
+    <section class="back"></section>
     <form method="post" style="font-family: 'Poppins', sans-serif;">
-
-
     {% if app.user %}
         <div class="mb-3">
             You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
@@ -31,11 +25,7 @@
         <input type="text" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="text" required autofocus>
         <label for="inputPassword">Password</label>
         <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-
-        <input type="hidden" name="_csrf_token"
-               value="{{ csrf_token('authenticate') }}"
-        >
-
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
         {#
         Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
         See https://symfony.com/doc/current/security/remember_me.html
@@ -52,13 +42,9 @@
                 <br>
             {% endif %}
         </section>
-
-
         <button class="btn btn-lg btn-primary" type="submit">
             Sign in
         </button>
     </section>
-
-
-</form>
+    </form>
 {% endblock %}
