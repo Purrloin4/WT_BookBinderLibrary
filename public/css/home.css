@@ -362,6 +362,10 @@ a:link{
   text-decoration: none;
 }
 
+.login_register_buttons{
+  margin-right: 15px;
+}
+
 .login_button, .register_button {
   background-color: #fbadaf;
   color: #fff;
