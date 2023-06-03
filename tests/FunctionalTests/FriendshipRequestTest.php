@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\FunctionalTests;
 
 use App\Repository\FriendshipRepository;
 use App\Repository\UserRepository;

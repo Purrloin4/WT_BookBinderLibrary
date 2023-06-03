@@ -5,8 +5,6 @@ namespace App\Controller;
 use App\Entity\Book;
 use App\Entity\Comment;
 use App\Form\CommentMessageFormType;
-use App\Form\CommentType;
-use App\Form\EditCommentFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -83,6 +81,12 @@ class BookController extends AbstractController
 
         if (!$comment) {
             throw $this->createNotFoundException('Comment not found');
+        }
+
+        // Check if the current user is the owner of the comment
+        $currentUser = $this->getUser();
+        if ($comment->getCommenter() !== $currentUser) {
+            throw $this->createAccessDeniedException('You are not allowed to delete this comment.');
         }
 
         $entityManager->remove($comment);
