@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 use App\Entity\Book;
 use App\Entity\Comment;
+use App\Entity\Favorite;
 
 class UserHomepageController extends AbstractController
 {
@@ -22,8 +23,13 @@ class UserHomepageController extends AbstractController
             throw $this->createNotFoundException('User not found');
         }
 
+        // fetch user favorite books from database
+        $favoriteRepository = $entityManager->getRepository(Favorite::class);
+        $favorites = $favoriteRepository->findBy(['user' => $user]);
+
         return $this->render('user/index.html.twig', [
             'user' => $user,
+            'favorites' => $favorites,
         ]);
     }
 }

@@ -5,11 +5,13 @@
 {% block body %}
     <div class="user-profile">
         <h1>{{ user.getDisplayName }}</h1>
-{#FIXME: This is not working#}
-{#        <ul>#}
-{#            {% for comment in user.getComments %}#}
-{#                <li>{{ comment.getMessage }}</li>#}
-{#            {% endfor %}#}
-{#        </ul>#}
+
+        <h2>Favorite Books</h2>
+        <ul>
+            {% for book in favorites %}
+                <li>{{ favorite.getBook.getTitle }}</li>
+            {% endfor %}
+        </ul>
+
     </div>
 {% endblock %}
