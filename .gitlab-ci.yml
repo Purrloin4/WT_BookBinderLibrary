@@ -27,6 +27,7 @@ test-job:
   MYSQL_ROOT_PASSWORD: NOT_OUR_ROOT_PW
   MYSQL_DATABASE: HELLO
   DATABASE_URL: "mysql://root:$MYSQL_ROOT_PASSWORD@mysql/$MYSQL_DATABASE"
+  XDEBUG_MODE: coverage
 
  # before starting the test scripts, add specific software to the container (only for this job)
  before_script:
