@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ user.getDisplayName }}{% endblock %}
+
+{% block body %}
+    <div class="user-profile">
+        <h1>{{ user.getDisplayName }}</h1>
+{#FIXME: This is not working#}
+{#        <ul>#}
+{#            {% for comment in user.getComments %}#}
+{#                <li>{{ comment.getMessage }}</li>#}
+{#            {% endfor %}#}
+{#        </ul>#}
+    </div>
+{% endblock %}
