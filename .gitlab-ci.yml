@@ -27,6 +27,7 @@ test-job:
   MYSQL_ROOT_PASSWORD: NOT_OUR_ROOT_PW
   MYSQL_DATABASE: HELLO
   DATABASE_URL: "mysql://root:$MYSQL_ROOT_PASSWORD@mysql/$MYSQL_DATABASE"
+  XDEBUG_MODE: coverage
 
  # before starting the test scripts, add specific software to the container (only for this job)
  before_script:
@@ -40,11 +41,18 @@ test-job:
  # load some test data in the temporary database
  - php bin/console doctrine:fixtures:load -n
  # run the tests (using the temporary database)
- - php bin/phpunit --log-junit report.xml
+ - php bin/phpunit --log-junit report.xml --coverage-text --color=never --coverage-cobertura=coverage.cobertura.xml
+ coverage: /^\s*Lines:\s*\d+.\d+\%/
+ only:
+  - merge_requests
+  - master
  artifacts:
   when: always
   reports:
     junit: report.xml
+    coverage_report:
+      coverage_format: cobertura
+      path: coverage.cobertura.xml
  after_script:
     - exit $EXIT_STATUS
 

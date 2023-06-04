@@ -1,5 +1,7 @@
 # Hello, welcome to our WebTech project
 
+![coverage](https://gitlab.groept.be/webtech/project/a22web41/badges/master/coverage.svg)
+
 ## This project implements 2 classes, web technologies and software engineering meaning that we have to:
 
 ### Design and implement a web app using modern web technologies

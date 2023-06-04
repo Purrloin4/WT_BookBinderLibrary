@@ -67,6 +67,13 @@
         "install-githooks": [
             "git config --local core.hooksPath .githooks",
             "echo \"\\033[0;32mGitHooks are successfully installed!\\033[0m\""
+        ],
+        "test": [
+            "php bin/console --env=test doctrine:database:drop --force --if-exists",
+            "php bin/console --env=test doctrine:database:create",
+            "php bin/console --env=test doctrine:schema:create",
+            "php bin/console --env=test doctrine:fixtures:load -n",
+            "php -dxdebug.mode=coverage bin/phpunit --coverage-text"
         ]
     },
     "scripts-descriptions": {
