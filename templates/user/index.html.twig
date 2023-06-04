@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ user.getDisplayName }}{% endblock %}
+
+{% block body %}
+    <div class="user-profile">
+        <h1>{{ user.getDisplayName }}</h1>
+    </div>
+{#TODO: Add user favorite books#}
+
+{#TODO: Add user recent comments#}
+{% endblock %}
