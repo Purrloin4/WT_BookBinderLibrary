@@ -41,7 +41,7 @@ test-job:
  # load some test data in the temporary database
  - php bin/console doctrine:fixtures:load -n
  # run the tests (using the temporary database)
- - php bin/phpunit --log-junit report.xml --coverage-text --color=never
+ - php bin/phpunit --log-junit report.xml --coverage-text --color=never --coverage-cobertura=coverage.cobertura.xml
  coverage: /^\s*Lines:\s*\d+.\d+\%/
  only:
   - merge_requests
@@ -50,6 +50,9 @@ test-job:
   when: always
   reports:
     junit: report.xml
+    coverage_report:
+      coverage_format: cobertura
+      path: coverage.cobertura.xml
  after_script:
     - exit $EXIT_STATUS
 
