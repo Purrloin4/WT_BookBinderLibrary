@@ -10,7 +10,7 @@ aside{
     margin-right: 50px;
 }
 
-.book_info, .book_comments{
+.book_textual_data, .book_comments{
     display: flex;
     flex-direction: column;
 }
