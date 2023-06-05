@@ -49,7 +49,7 @@ files=`git diff --name-only --staged`
 
 for file in $files
 do
-  if [ ${file##*.} = 'php' ]; then
+  if [ ${file##*.} = 'php' ] && [ -e file ]; then
     run_php $file
   fi
 done
