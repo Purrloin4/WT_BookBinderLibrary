@@ -93,6 +93,8 @@ class BookController extends AbstractController
         return $this->redirectToRoute('book_show', ['id' => $book->getId()]);
     }
 
+// TODO: Add a page where all books are shown in a list.
+/*
     #[Route('/books', name: 'app_books')]
     public function viewBooks(): Response
     {
@@ -100,4 +102,6 @@ class BookController extends AbstractController
 
         return $this->render('books.html.twig', ['controller_name' => 'BookController', 'books_list' => $booksList]);
     }
+*/
 }
+
