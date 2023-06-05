@@ -11,9 +11,9 @@
 {% block body %}
     {#  Todo: book info ie. Cover, title, author, genre and description  #}
 
-    <main>
+    <main class="book_info" data-isbn={{ book.isbn }}>
         <aside>
-            <img src="{{ asset('images/bookbinder_icon.png') }}" alt="Book cover of book #" width="250" height="400">
+            <img src="data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" class="book_photo" alt="Book cover of book #" width="250" height="400">
             <span class="fa fa-star"></span>
             <span class="fa fa-star"></span>
             <span class="fa fa-star"></span>
@@ -21,9 +21,9 @@
             <span class="fa fa-star"></span>
         </aside>
         <div class="info_and_comments">
-            <section class="book_info">
-                <h1>Book Title</h1>
-                <h2>Author</h2>
+            <section class="book_textual_data">
+                <h1 class="book_title">Book Title</h1>
+                <h2 class="book_author">Author</h2>
                 <p> lorem ipsum dolor sit amet ....</p>
             </section>
             <section class="book_comments">
