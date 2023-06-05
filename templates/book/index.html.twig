@@ -38,9 +38,7 @@
                         {{ form(editCommentForm) }}
                         {% else %}
                             {{ comment.message }}
-                            {% if comment.edited %}
-                                (edited)
-                            {% endif %}
+                            {{ comment.edited? '(edited)' : '' }}
                             {% if app.user %}
                                 {{ comment.commenter.displayName }}
                             {% else %}
