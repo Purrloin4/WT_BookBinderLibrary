@@ -32,10 +32,10 @@
             <section class="book_comments">
                 <h2>Comments</h2>
                 {% for comment in comments %}
-                <div>
-                    {# checks if we are currently editing this comment, using its ID #}
-                    {% if editingComment is defined and editingComment and comment.id == editComment.id %}
-                        {{ form(editCommentForm) }}
+                    <div>
+                        {# checks if we are currently editing this comment, using its ID #}
+                        {% if editingComment is defined and editingComment and comment.id == editComment.id %}
+                            {{ form(editCommentForm) }}
                         {% else %}
                             {{ comment.message }}
                             {{ comment.edited? '(edited)' : '' }}
@@ -49,8 +49,8 @@
                                 <a href="{{ path('comment_edit', {'id': book.id, 'commentId': comment.id}) }}">Edit</a>
                                 <a href="{{ path('comment_delete', {'id': book.id, 'commentId': comment.id}) }}">Delete</a>
                             {% endif %}
-                    {% endif %}
-                </div>
+                        {% endif %}
+                    </div>
                 {% endfor %}
                 {# Render the normal comment form only if not editing a comment #}
                 {%  if app.user %}
