@@ -5,20 +5,26 @@
 {% block stylesheets %}
     {{ parent() }}
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-
 {% endblock %}
 
 {% block body %}
+
+    {# Just some hardcoded examples, to be deleted afterwards #}
+    {% set chatrooms = ['Alice', 'Bob', 'Cindy'] %}
+    {% set messages = [['sender: me', 'receiver: Alice', 'message: hi!', 'timestamp: Today at 04:20']] %}
+
     <aside>
         <section>
             <h3>Recent chats</h3>
             <ul>
-                <li> Message of friend 1</li>
-                <li> Message of friend 2</li>
+                {% for chat in chatrooms %}
+                <li> Message of {{ chat }} </li>
+                {% endfor %}
             </ul>
         </section>
     </aside>
     <article>
+        {# TODO: WhatsApp-like layout showing messages. All conversations are shown in a sidebar on the left. The last clicked conversation is opened on the main screen #}
         <header>Conversation with friend x</header>
         <section>
             <ul>
