@@ -1,11 +1,13 @@
 main{
     display: flex;
     flex-direction: row;
+    margin: 30px;
 }
 
 aside{
     display: flex;
     flex-direction: column;
+    margin-right: 50px;
 }
 
 .book_info, .book_comments{
