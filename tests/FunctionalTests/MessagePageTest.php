@@ -2,6 +2,7 @@
 
 namespace App\Tests\FunctionalTests;
 
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class MessagePageTest extends WebTestCase
@@ -9,6 +10,10 @@ class MessagePageTest extends WebTestCase
     public function testMessagePageLoadsSuccessfully()
     {
         $client = static::createClient();
+        // Simulate logging in a different user
+        $userRepository = $client->getContainer()->get('doctrine')->getRepository(User::class);
+        $user = $userRepository->findOneBy(['email' => 'anotheruser@test.com']);
+        $client->loginUser($user);
         $crawler = $client->request('GET', '/messages');
 
         $this->assertResponseIsSuccessful();
