@@ -9,6 +9,13 @@
 
 {% block body %}
 
+    {% for message in user.getReceivedMessages() %}
+        {{ message.getSender() }}
+        {{ message.getReceiver() }}
+        {{ message.getMessage() }}
+        {{ message.getTimestamp() }}
+    {% endfor %}
+
     {# FIXME: Just some hardcoded examples, to be deleted afterwards #}
     {% set chatrooms = ['Alice', 'Bob', 'Cindy'] %}
     {% set messages = [['sender: me', 'receiver: Alice', 'message: hi!', 'timestamp: Today at 04:20']] %}
