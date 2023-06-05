@@ -20,6 +20,6 @@ fetch(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&jscmd=data&format=
 
                 // set author
                 book.querySelector('.book_author').textContent
-                    = data.authors[0].name;
+                    = 'By ' + data.authors[0].name;
             });
 
