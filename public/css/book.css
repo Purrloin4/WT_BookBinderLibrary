@@ -19,3 +19,12 @@ aside{
     display: flex;
     flex-direction: column;
 }
+
+.starbox{
+    width: 250px;
+    height: 50px;
+}
+
+.fa-star{
+    color: orange;
+}
