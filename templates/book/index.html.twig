@@ -2,54 +2,63 @@
 
 {% block title %}Hello BookController!{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/book.css') }}"/>
+{% endblock %}
+
+
 {% block body %}
     {#  Todo: book info ie. Cover, title, author, genre and description  #}
 
-<main>
-    <aside>
-        <img src="{{ asset('images/bookbinder_icon.png') }}" alt="Book cover of book #">
-        <span class="fa fa-star"></span>
-        <span class="fa fa-star"></span>
-        <span class="fa fa-star"></span>
-        <span class="fa fa-star"></span>
-        <span class="fa fa-star"></span>
-    </aside>
-    <h1>Book Title</h1>
-    <h2>Author</h2>
-    <p> lorem ipsum dolor sit amet ....</p>
-    <section>
-        <h2>Comments</h2>
-        {% for comment in comments %}
-            <div>
-                {# checks if we are currently editing this comment, using its ID #}
-                {% if editingComment is defined and editingComment and comment.id == editComment.id %}
-                    {{ form(editCommentForm) }}
-                {% else %}
-                    {{ comment.message }}
-                    {% if comment.edited %}
-                        (edited)
+    <main>
+        <aside>
+            <img src="{{ asset('images/bookbinder_icon.png') }}" alt="Book cover of book #">
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+        </aside>
+        <div class="info_and_comments">
+            <section class="book_info">
+                <h1>Book Title</h1>
+                <h2>Author</h2>
+                <p> lorem ipsum dolor sit amet ....</p>
+            </section>
+            <section class="book_comments">
+                <h2>Comments</h2>
+                {% for comment in comments %}
+                <div>
+                    {# checks if we are currently editing this comment, using its ID #}
+                    {% if editingComment is defined and editingComment and comment.id == editComment.id %}
+                        {{ form(editCommentForm) }}
+                        {% else %}
+                            {{ comment.message }}
+                            {% if comment.edited %}
+                                (edited)
+                            {% endif %}
+                            {% if app.user %}
+                                {{ comment.commenter.displayName }}
+                            {% else %}
+                                <p><a href="{{ path('app_login') }}">Login</a> or <a href="{{ path('app_register') }}">Register</a> to view the commenters name.</p>
+                            {% endif %}
+                            {{ comment.timestampFormatted }}
+                            {% if comment.commenter == app.user %}
+                                <a href="{{ path('comment_edit', {'id': book.id, 'commentId': comment.id}) }}">Edit</a>
+                                <a href="{{ path('comment_delete', {'id': book.id, 'commentId': comment.id}) }}">Delete</a>
+                            {% endif %}
                     {% endif %}
-                    {% if app.user %}
-                        {{ comment.commenter.displayName }}
-                    {% else %}
-                        <p><a href="{{ path('app_login') }}">Login</a> or <a href="{{ path('app_register') }}">Register</a> to view the commenters name.</p>
-                    {% endif %}
-                    {{ comment.timestampFormatted }}
-
-                    {% if comment.commenter == app.user %}
-                        <a href="{{ path('comment_edit', {'id': book.id, 'commentId': comment.id}) }}">Edit</a>
-                        <a href="{{ path('comment_delete', {'id': book.id, 'commentId': comment.id}) }}">Delete</a>
+                </div>
+                {% endfor %}
+                {# Render the normal comment form only if not editing a comment #}
+                {%  if app.user %}
+                    {% if editingComment is not defined or not editingComment %}
+                        <h2>Leave a comment!</h2>
+                        {{ form(commentForm) }}
                     {% endif %}
                 {% endif %}
-            </div>
-    {% endfor %}
-
-    {# Render the normal comment form only if not editing a comment #}
-    {%  if app.user %}
-        {% if editingComment is not defined or not editingComment %}
-            <h2>Leave a comment!</h2>
-            {{ form(commentForm) }}
-        {% endif %}
-    {% endif %}
-
+            </section>
+        </div>
+    </main>
 {% endblock %}

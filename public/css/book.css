@@ -1,0 +1,19 @@
+main{
+    display: flex;
+    flex-direction: row;
+}
+
+aside{
+    display: flex;
+    flex-direction: column;
+}
+
+.book_info, .book_comments{
+    display: flex;
+    flex-direction: column;
+}
+
+.info_and_comments{
+    display: flex;
+    flex-direction: column;
+}
