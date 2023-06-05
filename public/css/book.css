@@ -23,8 +23,15 @@ aside{
 .starbox{
     width: 250px;
     height: 50px;
+    text-align: center;
 }
 
 .fa-star{
+    color: gray;
+    margin-top: 20px;
+    padding: 5px;
+}
+
+.filled{
     color: orange;
 }
