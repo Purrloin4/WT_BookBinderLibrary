@@ -5,8 +5,6 @@ namespace App\Controller;
 use App\Entity\Book;
 use App\Entity\Comment;
 use App\Form\CommentMessageFormType;
-use App\Form\CommentType;
-use App\Form\EditCommentFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -85,6 +83,12 @@ class BookController extends AbstractController
             throw $this->createNotFoundException('Comment not found');
         }
 
+        // Check if the current user is the owner of the comment
+        $currentUser = $this->getUser();
+        if ($comment->getCommenter() !== $currentUser) {
+            throw $this->createAccessDeniedException('You are not allowed to delete this comment.');
+        }
+
         $entityManager->remove($comment);
         $entityManager->flush();
 
@@ -92,4 +96,16 @@ class BookController extends AbstractController
 
         return $this->redirectToRoute('book_show', ['id' => $book->getId()]);
     }
+
+// TODO: Add a page where all books are shown in a list.
+/*
+    #[Route('/books', name: 'app_books')]
+    public function viewBooks(): Response
+    {
+        $booksList = ['Book1', 'Book2', 'Book3'];
+
+        return $this->render('books.html.twig', ['controller_name' => 'BookController', 'books_list' => $booksList]);
+    }
+*/
 }
+
