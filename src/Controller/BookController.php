@@ -31,7 +31,8 @@ class BookController extends AbstractController
             $this->addFlash('success', 'Your comment was added!');
         }
 
-        $comments = $entityManager->getRepository(Comment::class)->findAll($book->getId());
+        $comments = $entityManager->getRepository(Comment::class)->getCommentsByBookId($book->getId());
+
 
         return $this->render('book/index.html.twig', [
             'book' => $book,
