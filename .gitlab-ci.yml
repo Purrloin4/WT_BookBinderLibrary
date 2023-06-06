@@ -20,6 +20,7 @@ stages:
 
 test-job:
  stage: test
+ image: php:latest
  services:
  # a container with a temporary mysql db for running unit tests
  - mysql:8
@@ -32,9 +33,14 @@ test-job:
  # before starting the test scripts, add specific software to the container (only for this job)
  before_script:
  # mysql PDO needs to be installed as a PHP extension in the container for the tests to run
- - docker-php-ext-install pdo pdo_mysql
+ - apt-get update
+ - apt-get -yq install git unzip zip libzip-dev zlib1g-dev
+ - docker-php-ext-install pdo pdo_mysql zip
+ - pecl install xdebug
+ - docker-php-ext-enable xdebug
+ - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+ - php composer-setup.php --install-dir=/usr/local/bin --filename=composer
  script:
- - echo $DATABASE_URL
  - composer install
  # run the migration on the temporary database
  - php bin/console doctrine:migrations:migrate -n --allow-no-migration
