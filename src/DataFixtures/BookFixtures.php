@@ -25,12 +25,20 @@ class BookFixtures extends Fixture
         $comment->setCommenter($user1);
 
         $book = new Book();
-        $book->setIsbn($faker->isbn13());
+        $book->setIsbn('9781338878929'); // faker will generate unused ISBNs
         $book->addComment($comment);
+
+        $user2 = new User();
+        $user2->setEmail('anotheruser@test.com');
+        $user2->setPassword($faker->password());
+        $user2->setDisplayName($faker->name());
 
         $manager->persist($book);
         $manager->persist($comment);
         $manager->persist($user1);
+        $manager->persist($user2);
         $manager->flush();
+
+
     }
 }
