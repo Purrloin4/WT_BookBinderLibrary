@@ -16,12 +16,12 @@
 
 {% block body %}
     <div class="book-store">
-    <div class="header">
-        <div class="browse">
+    <header class="header">
+        <nav class="browse">
             <div class="search-bar">
                 <input type="text" id="search" placeholder="Search Book" />
             </div>
-        </div>
+        </nav>
         <div class="header-title" onclick="window.location.href='{{ path('app_home') }}'">Book<span>Binder</span></div>
         <div class="profile">
             <div class="user-profile">
@@ -33,7 +33,7 @@
                 Menu
             </div>
         </div>
-    </div>
+    </header>
         <main>
             {% block content %}{% endblock %}
         </main>
