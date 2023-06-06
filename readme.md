@@ -3,11 +3,11 @@
 ## Project URL's
 Provide a link to the main page of your application. Or if you have multiple parts in your website you can provide a list of links (i.e. not all pages are in your main navigation bar)
 * [Main login page](https://a22web41.studev.groept.be/public/)
-TODO: * [Admin page](https://a22web00.studev.groept.be/public/admin)
+### TODO: * [Admin page](https://a22web41.studev.groept.be/public/admin)
 
 ---
-TODO:
-## Website credentials
+
+## TODO: Website credentials
 ### Regular user
 - login : 
 - password :
