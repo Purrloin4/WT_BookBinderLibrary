@@ -20,7 +20,7 @@ final class Version20230607100928 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE book ADD published_date DATETIME NOT NULL, ADD average_rating DOUBLE PRECISION DEFAULT NULL, ADD ratings_count INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE book ADD published_date DATETIME NULL, ADD average_rating DOUBLE PRECISION DEFAULT NULL, ADD ratings_count INT DEFAULT NULL');
         $this->addSql('ALTER TABLE user DROP published_date, DROP average_rating, DROP ratings_count');
     }
 

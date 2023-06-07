@@ -22,7 +22,7 @@ class Book
     #[ORM\OneToMany(mappedBy: 'Book', targetEntity: Comment::class)]
     private Collection $comments;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $publishedDate = null;
 
     #[ORM\Column(nullable: true)]

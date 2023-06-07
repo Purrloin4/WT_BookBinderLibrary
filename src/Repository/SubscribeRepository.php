@@ -44,7 +44,7 @@ class SubscribeRepository extends ServiceEntityRepository
     /**
      * @return Book[] Returns an array of Book objects
      */
-    public function getUserFollows(User $user): array
+    public function getUserSubscribes(User $user): array
     {
         $qb = $this->createQueryBuilder('f');
 
@@ -60,7 +60,7 @@ class SubscribeRepository extends ServiceEntityRepository
     /**
      * @return User[] Returns an array of Book objects
      */
-    public function getBookFollows(Book $book): array
+    public function getBookSubscribes(Book $book): array
     {
         $qb = $this->createQueryBuilder('f');
 
