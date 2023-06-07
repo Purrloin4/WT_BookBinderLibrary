@@ -5,11 +5,30 @@
 {% block body %}
     <div class="user-profile">
         <h1>{{ user.getDisplayName }}</h1>
-{#FIXME: This is not working#}
-{#        <ul>#}
-{#            {% for comment in user.getComments %}#}
-{#                <li>{{ comment.getMessage }}</li>#}
-{#            {% endfor %}#}
-{#        </ul>#}
+
+        {# Display the user's subscribing books #}
+        <h2>Subscribing Books</h2>
+        {% if user.subscribingBooks|length > 0 %}
+            <ul>
+                {% for book in user.subscribingBooks %}
+                    <li><a href="{{ path('book', { 'id': book.id }) }}">{{ book.title }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No subscribing books</p>
+        {% endif %}
+
+        <div class="friendship-button">
+            {% if not friendship %}
+                {# If not friends, display 'Send Friend Request' button #}
+                <a href="{{ path('app_api_send_friend_request', { 'id': user.id }) }}">Send Friend Request</a>
+            {% elseif not friendship.approved %}
+                {# If request sent but not accepted, display 'Waiting' message #}
+                <p>Waiting for Friend Request Acceptance</p>
+            {% else %}
+                {# If friends, display 'Start Chat' button #}
+                <a href="{{ path('chat', { 'id': user.id }) }}">Start Chat</a>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}

@@ -16,15 +16,24 @@ class UserHomepageController extends AbstractController
     public function index(int $id, EntityManagerInterface $entityManager): Response
     {
         $userRepository = $entityManager->getRepository(User::class);
+        $subscribeRepository = $entityManager->getRepository(Subscribe::class);
+        $friendshipRepository = $entityManager->getRepository(Friendship::class);
+
         $user = $userRepository->find($id);
 
         if (!$user) {
             throw $this->createNotFoundException('User not found');
         }
 
+        $subscribes = $subscribeRepository->getUserSubscribes($user);
+        $friendship = $friendshipRepository->findByUser($this->getUser(), $user);
+
         return $this->render('user/index.html.twig', [
             'user' => $user,
+            'subscribes' => $subscribes,
+            'friendship' => $friendship,
         ]);
     }
+
 }
 

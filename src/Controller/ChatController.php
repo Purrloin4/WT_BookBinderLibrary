@@ -23,34 +23,38 @@ class ChatController extends AbstractController
         $this->messageRepository = $messageRepository;
     }
 
-    #[Route('/chat', name: 'chat')]
-    public function chat(Request $request): Response
+    #[Route('/chat/{id}', name: 'chat')]
+    public function chat(Request $request, User $user): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        // Retrieve the latest chat history for the given user
+        $messages = $this->messageRepository->findBySenderAndReceiver($this->getUser(), $user);
+
+        // Create a new message form
         $message = new Message();
         $form = $this->createForm(MessageType::class, $message);
+
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
+            // Set the sender and receiver of the message
             $message->setSender($this->getUser());
-            $message->setCreatedAt(new \DateTime());
+            $message->setReceiver($user);
 
+            // Persist the message in the database
             $this->entityManager->persist($message);
             $this->entityManager->flush();
 
-            // Redirect to prevent form resubmission
-            return $this->redirectToRoute('chat');
+            // Redirect to the chat page to display the updated chat history
+            return $this->redirectToRoute('chat', ['id' => $user->getId()]);
         }
 
-        $messages = $this->messageRepository->findRecentMessages();
-
-        // Get the display name of the user talking to you
-        $displayName = $this->getUser() ? $this->getUser()->getDisplayName() : '';
-
         return $this->render('chat/chat.html.twig', [
-            'form' => $form->createView(),
+            'user' => $user,
             'messages' => $messages,
-            'displayName' => $displayName,
+            'messageForm' => $form->createView(),
         ]);
     }
+
 }
 
