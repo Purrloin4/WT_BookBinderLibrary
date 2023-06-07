@@ -108,5 +108,55 @@ class BookController extends AbstractController
         return $this->render('books.html.twig', ['controller_name' => 'BookController', 'books_list' => $booksList]);
     }
 */
+
+    #[Route('/book/{id}/subscribe', name: 'book_subscribe', methods: ['POST'])]
+    public function subscribe(Request $request, Book $book, EntityManagerInterface $entityManager): Response
+    {
+        $currentUser = $this->getUser();
+
+        if (!$currentUser) {
+            throw $this->createAccessDeniedException('You must be logged in to subscribe to a book.');
+        }
+
+        if ($book->isUserSubscribed($currentUser)) {
+            $book->removeSubscriber($currentUser);
+            $message = 'You have unsubscribed from this book.';
+        } else {
+            $book->addSubscriber($currentUser);
+            $message = 'You have subscribed to this book.';
+        }
+
+        $entityManager->persist($book);
+        $entityManager->flush();
+
+        $this->addFlash('success', $message);
+
+        return $this->redirectToRoute('book_show', ['id' => $book->getId()]);
+    }
+
+    #[Route('/book/{id}/unsubscribe', name: 'book_unsubscribe', methods: ['POST'])]
+    public function unsubscribe(Request $request, Book $book, EntityManagerInterface $entityManager): Response
+    {
+        $currentUser = $this->getUser();
+
+        if (!$currentUser) {
+            throw $this->createAccessDeniedException('You must be logged in to unsubscribe from a book.');
+        }
+
+        if ($book->isUserSubscribed($currentUser)) {
+            $book->removeSubscriber($currentUser);
+            $message = 'You have unsubscribed from this book.';
+        } else {
+            throw $this->createAccessDeniedException('You are not subscribed to this book.');
+        }
+
+        $entityManager->persist($book);
+        $entityManager->flush();
+
+        $this->addFlash('success', $message);
+
+        return $this->redirectToRoute('book_show', ['id' => $book->getId()]);
+    }
+
 }
 
