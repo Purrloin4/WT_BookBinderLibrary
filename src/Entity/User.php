@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -46,11 +47,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'Receiver', targetEntity: Message::class)]
     private Collection $receivedMessages;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Follow::class)]
-    private Collection $follows;
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Subscribe::class)]
+    private Collection $subscribes;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Comment::class)]
     private Collection $comments;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $publishedDate = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?float $averageRating = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $ratingsCount = null;
 
     public function __construct()
     {
@@ -58,7 +68,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->receivedFriendship = new ArrayCollection();
         $this->sendMessages = new ArrayCollection();
         $this->receivedMessages = new ArrayCollection();
-        $this->follows = new ArrayCollection();
+        $this->subscribes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -221,29 +231,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Follow>
+     * @return Collection<int, Subscribe>
      */
-    public function getFollows(): Collection
+    public function getSubscribes(): Collection
     {
-        return $this->follows;
+        return $this->subscribes;
     }
 
-    public function addFollow(Follow $follow): self
+    public function addSubscribe(Subscribe $subscribe): self
     {
-        if (!$this->follows->contains($follow)) {
-            $this->follows->add($follow);
-            $follow->setUser($this);
+        if (!$this->subscribes->contains($subscribe)) {
+            $this->subscribes->add($subscribe);
+            $subscribe->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeFollow(Follow $follow): self
+    public function removeSubscribe(Subscribe $subscribe): self
     {
-        if ($this->follows->removeElement($follow)) {
+        if ($this->subscribes->removeElement($subscribe)) {
             // set the owning side to null (unless already changed)
-            if ($follow->getUser() === $this) {
-                $follow->setUser(null);
+            if ($subscribe->getUser() === $this) {
+                $subscribe->setUser(null);
             }
         }
 
@@ -264,6 +274,42 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setComments(Collection $comments): void
     {
         $this->comments = $comments;
+    }
+
+    public function getPublishedDate(): ?\DateTimeInterface
+    {
+        return $this->publishedDate;
+    }
+
+    public function setPublishedDate(?\DateTimeInterface $publishedDate): self
+    {
+        $this->publishedDate = $publishedDate;
+
+        return $this;
+    }
+
+    public function getAverageRating(): ?float
+    {
+        return $this->averageRating;
+    }
+
+    public function setAverageRating(?float $averageRating): self
+    {
+        $this->averageRating = $averageRating;
+
+        return $this;
+    }
+
+    public function getRatingsCount(): ?int
+    {
+        return $this->ratingsCount;
+    }
+
+    public function setRatingsCount(?int $ratingsCount): self
+    {
+        $this->ratingsCount = $ratingsCount;
+
+        return $this;
     }
 
 

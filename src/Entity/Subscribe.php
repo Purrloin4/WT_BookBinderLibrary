@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\FollowRepository;
+use App\Repository\SubscribeRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: FollowRepository::class)]
-class Follow
+#[ORM\Entity(repositoryClass: SubscribeRepository::class)]
+class Subscribe
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
