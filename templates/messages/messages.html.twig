@@ -13,26 +13,32 @@
     {% set chatrooms = ['Alice', 'Bob', 'Cindy'] %}
     {% set messages = [['sender: me', 'receiver: Alice', 'message: hi!', 'timestamp: Today at 04:20']] %}
 
-    <aside>
-        <section>
-            <h3>Recent chats</h3>
-            <ul>
-                {% for chat in chatrooms %}
-                <li> Message of {{ chat }} </li>
-                {% endfor %}
-            </ul>
-        </section>
-    </aside>
-    <article>
-        {# TODO: WhatsApp-like layout showing messages. All conversations are shown in a sidebar on the left. The last clicked conversation is opened on the main screen #}
-        <header>Conversation with friend x</header>
-        <section>
+    <div class="message_box">
+        <aside>
+            <section>
+                <h2>Recent chats</h2>
+                <ul>
+                    {% for chat in chatrooms %}
+                        <li> Message of {{ chat }} </li>
+                    {% endfor %}
+                </ul>
+            </section>
+        </aside>
+        <main>
+            {# TODO: WhatsApp-like layout showing messages. All conversations are shown in a sidebar on the left. The last clicked conversation is opened on the main screen #}
+            <header>Friend x</header>
             <ul>
                 <li>Message 1</li>
                 <li>Message 2</li>
                 <li>Message 3</li>
                 <li>...</li>
             </ul>
-        </section>
-    </article>
+            <form>
+                <label for="send_message">Type your message...</label>
+                <input type="text" id="send_message">
+                <button> Send </button>
+            </form>
+
+        </main>
+    </div>
 {% endblock %}
