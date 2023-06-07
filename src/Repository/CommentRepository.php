@@ -39,6 +39,17 @@ class CommentRepository extends ServiceEntityRepository
         }
     }
 
+    public function getCommentsByBookId(int $bookId): array
+    {
+        $qb = $this->createQueryBuilder('c');
+        $qb->select('c')
+            ->where('c.book = :bookId')
+            ->setParameter('bookId', $bookId)
+            ->orderBy('c.id', 'DESC');
+
+        return $qb->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Comment[] Returns an array of Comment objects
 //     */
