@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\BookRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
@@ -20,6 +21,15 @@ class Book
 
     #[ORM\OneToMany(mappedBy: 'Book', targetEntity: Comment::class)]
     private Collection $comments;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $publishedDate = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?float $averageRating = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $ratingsCount = null;
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -68,6 +78,42 @@ class Book
                 $comment->setBook(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPublishedDate(): ?\DateTimeInterface
+    {
+        return $this->publishedDate;
+    }
+
+    public function setPublishedDate(\DateTimeInterface $publishedDate): self
+    {
+        $this->publishedDate = $publishedDate;
+
+        return $this;
+    }
+
+    public function getAverageRating(): ?float
+    {
+        return $this->averageRating;
+    }
+
+    public function setAverageRating(?float $averageRating): self
+    {
+        $this->averageRating = $averageRating;
+
+        return $this;
+    }
+
+    public function getRatingsCount(): ?int
+    {
+        return $this->ratingsCount;
+    }
+
+    public function setRatingsCount(?int $ratingsCount): self
+    {
+        $this->ratingsCount = $ratingsCount;
 
         return $this;
     }
