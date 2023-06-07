@@ -13,22 +13,20 @@ class HomeController extends AbstractController
     #[Route('/home', name: 'app_home')]
     public function index(BookRepository $bookRepository): Response
     {
-        $books = $bookRepository->findAll();
+        // Find sliding books
+        $slidingBooks = $bookRepository->findTopRatedBooks(5);
 
-        // FIXME: Find how to pick the sliding books
-        $sliding_books = array_slice($books, 0, 5, true);
+        // Find popular books
+        $popularBooks = $bookRepository->findPopularBooks(5);
 
-        // FIXME: Find how to pick the popular books
-        $popular_books = array_slice($books, 5, 8, true);
-
-        // FIXME: Find how to pick the books of the year
-        $year_books = array_slice($books, 13, 5, true);
+        // Find books of the year
+        $yearBooks = $bookRepository->findRandomBooksPublishedThisYear(5);
 
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
-            'sliding_books' => $sliding_books,
-            'popular_books' => $popular_books,
-            'year_books' => $year_books,
+            'sliding_books' => $slidingBooks,
+            'popular_books' => $popularBooks,
+            'year_books' => $yearBooks,
         ]);
     }
 }

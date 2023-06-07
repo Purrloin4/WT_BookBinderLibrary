@@ -39,28 +39,97 @@ class BookRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Book[] Returns an array of Book objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('b.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * Finds books by their title.
+     *
+     * @param string $value The title to search for
+     * @return Book[] Returns an array of Book objects matching the given title
+     */
+    public function findByTitle(string $value): array
+    {
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.title = :val')
+            ->setParameter('val', $value)
+            ->orderBy('b.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
-//    public function findOneBySomeField($value): ?Book
-//    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    /**
+     * Finds a book by its title.
+     *
+     * @param string $value The title to search for
+     * @return Book|null Returns a Book object matching the given title, or null if not found
+     */
+    public function findOneByTitle(string $value): ?Book
+    {
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.title = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
+    /**
+     * Finds popular books based on average rating, ratings count, and recent publication date.
+     *
+     * @param int $limit The maximum number of popular books to retrieve
+     * @return Book[] Returns an array of popular Book objects
+     */
+    public function findPopularBooks(int $limit): array
+    {
+        return $this->createQueryBuilder('b')
+            ->orderBy('b.averageRating', 'DESC')
+            ->addOrderBy('b.ratingsCount', 'DESC')
+            ->andWhere('b.publishedDate >= :recentDate')
+            ->setParameter('recentDate', new \DateTime('-1 year'))
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * Finds the top-rated books based on average rating.
+     *
+     * @param int $limit The maximum number of top-rated books to retrieve
+     * @return Book[] Returns an array of top-rated Book objects
+     */
+    public function findTopRatedBooks(int $limit): array
+    {
+        return $this->createQueryBuilder('b')
+            ->orderBy('b.averageRating', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * Finds a random selection of books published this year.
+     *
+     * @param int $limit The maximum number of books to retrieve
+     * @return Book[] Returns an array of random Book objects published this year
+     */
+    public function findRandomBooksPublishedThisYear(int $limit): array
+    {
+        $currentYear = (int) date('Y');
+        $startDate = new \DateTime("{$currentYear}-01-01");
+        $endDate = new \DateTime();
+
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.publishedDate >= :startDate')
+            ->andWhere('b.publishedDate <= :endDate')
+            ->setParameter('startDate', $startDate)
+            ->setParameter('endDate', $endDate)
+            ->orderBy('RAND()')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+
 }
