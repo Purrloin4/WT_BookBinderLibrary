@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Chat with {{ recipient.displayName }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+    <h1>Chat Page</h1>
+
+    <div id="message-display">
+        {% for message in messages %}
+            <div class="message {% if message.sender == app.user %}sent{% else %}received{% endif %}">
+                <div class="message-sender">{{ message.sender.displayName }}</div>
+                <div class="message-content">{{ message.content }}</div>
+                <div class="message-timestamp">{{ message.createdAt|date('H:i:s') }}</div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <form id="message-form" action="{{ path('chat') }}" method="post">
+        {{ form_widget(form) }}
+        <button type="submit">Send</button>
+    </form>
+
+    <script>
+        // Scroll to the bottom of the message display area
+        var messageDisplay = document.getElementById('message-display');
+        messageDisplay.scrollTop = messageDisplay.scrollHeight;
+    </script>
+{% endblock %}
