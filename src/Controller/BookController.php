@@ -31,7 +31,8 @@ class BookController extends AbstractController
             $this->addFlash('success', 'Your comment was added!');
         }
 
-        $comments = $entityManager->getRepository(Comment::class)->findAll($book->getId());
+        $comments = $entityManager->getRepository(Comment::class)->getCommentsByBookId($book->getId());
+
 
         return $this->render('book/index.html.twig', [
             'book' => $book,
@@ -96,4 +97,16 @@ class BookController extends AbstractController
 
         return $this->redirectToRoute('book_show', ['id' => $book->getId()]);
     }
+
+// TODO: Add a page where all books are shown in a list.
+/*
+    #[Route('/books', name: 'app_books')]
+    public function viewBooks(): Response
+    {
+        $booksList = ['Book1', 'Book2', 'Book3'];
+
+        return $this->render('books.html.twig', ['controller_name' => 'BookController', 'books_list' => $booksList]);
+    }
+*/
 }
+
