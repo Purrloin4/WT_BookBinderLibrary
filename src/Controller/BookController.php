@@ -6,10 +6,12 @@ use App\Entity\Book;
 use App\Entity\Comment;
 use App\Form\CommentMessageFormType;
 use Doctrine\ORM\EntityManagerInterface;
+use MongoDB\Driver\Monitoring\Subscriber;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Node\Expression\Binary\SubBinary;
 
 class BookController extends AbstractController
 {
@@ -33,11 +35,13 @@ class BookController extends AbstractController
 
         $comments = $entityManager->getRepository(Comment::class)->getCommentsByBookId($book->getId());
 
+        $subscribers = $entityManager->getRepository(Subscriber::class)->getSubscribersByBookId($book->getId());
 
         return $this->render('book/index.html.twig', [
             'book' => $book,
             'comments' => $comments,
             'commentForm' => $commentForm->createView(),
+            'subscribers' => $subscribers,
         ]);
     }
 
@@ -97,17 +101,6 @@ class BookController extends AbstractController
 
         return $this->redirectToRoute('book_show', ['id' => $book->getId()]);
     }
-
-// TODO: Add a page where all books are shown in a list.
-/*
-    #[Route('/books', name: 'app_books')]
-    public function viewBooks(): Response
-    {
-        $booksList = ['Book1', 'Book2', 'Book3'];
-
-        return $this->render('books.html.twig', ['controller_name' => 'BookController', 'books_list' => $booksList]);
-    }
-*/
 
     #[Route('/book/{id}/subscribe', name: 'book_subscribe', methods: ['POST'])]
     public function subscribe(Request $request, Book $book, EntityManagerInterface $entityManager): Response

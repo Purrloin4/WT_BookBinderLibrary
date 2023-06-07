@@ -11,6 +11,18 @@
 {% block content %}
     {#  Todo: book info ie. Cover, title, author, genre and description  #}
 
+    <div class="subscribe">
+        <a href="{{ path('subscribe', {'id': book.id}) }}">Subscribe</a>
+    </div>
+
+    <div class="subscribers"
+            {% for subscriber in subscribers %}
+                <div class="subscriber">
+                    <p>{{ subscriber.displayName }}</p>
+                </div>
+            {% endfor %}
+    </div>
+
     <main class="book_info" data-isbn={{ book.isbn }}>
         <aside>
             <img src="data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" class="book_photo" alt="Book cover of book #" width="250" height="400">

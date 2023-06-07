@@ -117,4 +117,27 @@ class Book
 
         return $this;
     }
+
+    public function isUserSubscribed(User $user): bool
+    {
+        return $this->subscribers->contains($user);
+    }
+
+    public function removeSubscriber(User $user): self
+    {
+        if ($this->subscribers->contains($user)) {
+            $this->subscribers->removeElement($user);
+        }
+
+        return $this;
+    }
+
+    public function addSubscriber(User $user): self
+    {
+        if (!$this->subscribers->contains($user)) {
+            $this->subscribers->add($user);
+        }
+
+        return $this;
+    }
 }

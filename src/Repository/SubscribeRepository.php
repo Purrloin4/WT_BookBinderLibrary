@@ -73,6 +73,17 @@ class SubscribeRepository extends ServiceEntityRepository
         ;
     }
 
+    public function getSubscribersByBookId(int $bookId): array
+    {
+        $qb = $this->createQueryBuilder('f');
+        $qb->select('f')
+            ->where('f.book = :bookId')
+            ->setParameter('bookId', $bookId)
+            ->orderBy('f.id', 'DESC');
+
+        return $qb->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Follow[] Returns an array of Follow objects
 //     */

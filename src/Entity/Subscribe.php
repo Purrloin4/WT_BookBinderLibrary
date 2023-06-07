@@ -49,4 +49,17 @@ class Subscribe
 
         return $this;
     }
+
+    public function getSubscribersByBookId(int $bookId): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT s
+            FROM App\Entity\Subscribe s
+            WHERE s.Book = :bookId'
+        )->setParameter('bookId', $bookId);
+
+        return $query->getResult();
+    }
 }
