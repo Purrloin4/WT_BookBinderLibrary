@@ -4,14 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Book;
 use App\Entity\Comment;
+use App\Entity\Subscribe;
 use App\Form\CommentMessageFormType;
 use Doctrine\ORM\EntityManagerInterface;
-use MongoDB\Driver\Monitoring\Subscriber;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Twig\Node\Expression\Binary\SubBinary;
 
 class BookController extends AbstractController
 {
@@ -35,13 +34,21 @@ class BookController extends AbstractController
 
         $comments = $entityManager->getRepository(Comment::class)->getCommentsByBookId($book->getId());
 
-        $subscribers = $entityManager->getRepository(Subscriber::class)->getSubscribersByBookId($book->getId());
+        $subscribers = $entityManager->getRepository(Subscribe::class)->getSubscribersByBookId($book->getId());
+
+        $isSubscribed = false;
+        $user = $this->getUser();
+
+        if (null !== $user) {
+            $isSubscribed = $entityManager->getRepository(Subscribe::class)->isSubscribed($user->getId(), $book->getId());
+        }
 
         return $this->render('book/index.html.twig', [
             'book' => $book,
             'comments' => $comments,
             'commentForm' => $commentForm->createView(),
             'subscribers' => $subscribers,
+            'isSubscribed' => $isSubscribed,
         ]);
     }
 
@@ -80,7 +87,7 @@ class BookController extends AbstractController
     }
 
     #[Route('/book/{id}/comment/{commentId}/delete', name: 'comment_delete', methods: ['GET'])]
-    public function delete(Request $request, Book $book, int $commentId, EntityManagerInterface $entityManager): Response
+    public function delete(Book $book, int $commentId, EntityManagerInterface $entityManager): Response
     {
         $comment = $entityManager->getRepository(Comment::class)->find($commentId);
 
@@ -103,7 +110,7 @@ class BookController extends AbstractController
     }
 
     #[Route('/book/{id}/subscribe', name: 'book_subscribe', methods: ['POST'])]
-    public function subscribe(Request $request, Book $book, EntityManagerInterface $entityManager): Response
+    public function subscribe(Book $book, EntityManagerInterface $entityManager): Response
     {
         $currentUser = $this->getUser();
 
@@ -124,7 +131,7 @@ class BookController extends AbstractController
 
         $this->addFlash('success', $message);
 
-        return $this->redirectToRoute('book_show', ['id' => $book->getId()]);
+        return $this->redirectToRoute('book_show', ['id' => $book->getId(), 'message' => $message]);
     }
 
     #[Route('/book/{id}/unsubscribe', name: 'book_unsubscribe', methods: ['POST'])]
@@ -150,6 +157,4 @@ class BookController extends AbstractController
 
         return $this->redirectToRoute('book_show', ['id' => $book->getId()]);
     }
-
 }
-

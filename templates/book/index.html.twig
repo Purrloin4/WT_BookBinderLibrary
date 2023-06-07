@@ -12,8 +12,16 @@
     {#  Todo: book info ie. Cover, title, author, genre and description  #}
 
     <div class="subscribe">
-        <a href="{{ path('subscribe', {'id': book.id}) }}">Subscribe</a>
+        {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+            <a href="{{ path('app_login') }}">Subscribe after Login</a>
+        {% elseif isSubscribed %}
+            <a href="{{ path('book_unsubscribe', {'id': book.id}) }}">Unsubscribe</a>
+        {% else %}
+            <a href="{{ path('book_subscribe', {'id': book.id}) }}">Subscribe</a>
+        {% endif %}
     </div>
+
+
 
     <div class="subscribers"
             {% for subscriber in subscribers %}

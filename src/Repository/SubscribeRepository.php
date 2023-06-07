@@ -77,12 +77,31 @@ class SubscribeRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('f');
         $qb->select('f')
-            ->where('f.book = :bookId')
+            ->join('f.Book', 'b')
+            ->where('b.id = :bookId')
             ->setParameter('bookId', $bookId)
-            ->orderBy('f.id', 'DESC');
+            ->orderBy('f.id', 'DESC')
+            ->setMaxResults(5);
 
         return $qb->getQuery()->getResult();
     }
+
+    public function isSubscribed(int $userId, int $bookId): bool
+    {
+        $qb = $this->createQueryBuilder('f');
+
+        $result = $qb
+            ->select('COUNT(f.id)')
+            ->andWhere($qb->expr()->eq('f.User', ':userId'))
+            ->andWhere($qb->expr()->eq('f.Book', ':bookId'))
+            ->setParameter('userId', $userId)
+            ->setParameter('bookId', $bookId)
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        return $result > 0;
+    }
+
 
 //    /**
 //     * @return Follow[] Returns an array of Follow objects
