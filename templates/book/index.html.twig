@@ -9,7 +9,7 @@
 
 
 {% block content %}
-    {#  Todo: book info ie. Cover, title, author, genre and description  #}
+    {#  Todo: book info ie. Cover, title, author and description  #}
 
     <div class="subscribe">
         {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
@@ -21,8 +21,7 @@
         {% endif %}
     </div>
 
-
-
+    <h2>Subscribers</h2>
     <div class="subscribers"
             {% for subscriber in subscribers %}
                 <div class="subscriber">
