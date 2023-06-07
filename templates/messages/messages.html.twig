@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{ asset('css/messages.css') }}"/>
 {% endblock %}
 
-{% block body %}
+{% block content %}
 
     {# FIXME: Just some hardcoded examples, to be deleted afterwards #}
     {% set chatrooms = ['Alice', 'Bob', 'Cindy'] %}
@@ -27,19 +27,22 @@
         </aside>
         <main>
             {# TODO: WhatsApp-like layout showing messages. All conversations are shown in a sidebar on the left. The last clicked conversation is opened on the main screen #}
-            <header>Friend x</header>
-            <ul>
-                <li>Message 1</li>
-                <li>Message 2</li>
-                <li>Message 3</li>
-                <li>...</li>
-            </ul>
-            <form>
-                <label for="send_message">Type your message...</label>
-                <input type="text" id="send_message">
-                <button> Send </button>
-            </form>
+            <section>
+                <h2>Friend x</h2>
+                <ul>
+                    <li>Message 1</li>
+                    <li>Message 2</li>
+                    <li>Message 3</li>
+                    <li>...</li>
+                </ul>
+                <form>
+                    <div class="input_box">
+                        <input type="text" placeholder="Type your message..." id="send_message">
+                        <button type="button"> Send </button>
+                    </div>
 
+                </form>
+            </section>
         </main>
     </div>
 {% endblock %}

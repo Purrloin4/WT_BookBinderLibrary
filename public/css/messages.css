@@ -1,0 +1,51 @@
+.message_box{
+    display: flex;
+    flex-direction: row;
+    border-style: solid;
+    border-radius: 10px;
+    border-color: black;
+    margin: 20px;
+    justify-content: space-between;
+    box-shadow: 5px 5px 5px 5px rgba(0,0,0,0.4);
+}
+
+aside{
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    background-color: #cbb5e2;
+    padding: 15px;
+    border-radius: 10px;
+    justify-content: center;
+}
+
+main{
+    display: flex;
+    flex-direction: row;
+    flex: 2;
+    padding: 15px;
+    justify-content: center;
+
+}
+
+.input_box{
+    height: 60px;
+    font-family: 'Poppins', sans-serif;
+}
+
+input, button{
+    height: 50px;
+    border-radius: 10px;
+    background: none;
+    outline: none;
+}
+
+input{
+    padding-left: 10px;
+}
+
+button{
+    background-color: #cbb5e2;
+    border-style: none;
+}
+
