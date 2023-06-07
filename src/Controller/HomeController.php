@@ -17,7 +17,7 @@ class HomeController extends AbstractController
         $slidingBooks = $bookRepository->findTopRatedBooks(5);
 
         // Find popular books
-        $popularBooks = $bookRepository->findPopularBooks(5);
+        $popularBooks = $bookRepository->findPopularBooks(8);
 
         // Find books of the year
         $yearBooks = $bookRepository->findRandomBooksPublishedThisYear(5);
