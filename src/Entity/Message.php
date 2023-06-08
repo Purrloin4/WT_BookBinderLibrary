@@ -14,11 +14,11 @@ class Message
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'messages')]
+    #[ORM\ManyToOne(inversedBy: 'sendMessages')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $Sender = null;
 
-    #[ORM\ManyToOne(inversedBy: 'messages')]
+    #[ORM\ManyToOne(inversedBy: 'receivedMessages')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $Receiver = null;
 

@@ -6,7 +6,6 @@ use App\Repository\BookRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints\Date;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
 class Book
@@ -19,7 +18,7 @@ class Book
     #[ORM\Column(length: 255)]
     private ?string $isbn = null;
 
-    #[ORM\OneToMany(mappedBy: 'Book', targetEntity: Comment::class)]
+    #[ORM\OneToMany(mappedBy: 'book', targetEntity: Comment::class)]
     private Collection $comments;
 
     #[ORM\Column(nullable: true)]
