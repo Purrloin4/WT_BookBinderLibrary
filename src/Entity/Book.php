@@ -22,8 +22,8 @@ class Book
     #[ORM\OneToMany(mappedBy: 'Book', targetEntity: Comment::class)]
     private Collection $comments;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $publishedDate = null;
+    #[ORM\Column(nullable: true)]
+    private ?string $publishedDate = null;
 
     #[ORM\Column(nullable: true)]
     private ?float $averageRating = null;
@@ -82,12 +82,12 @@ class Book
         return $this;
     }
 
-    public function getPublishedDate(): ?\DateTimeInterface
+    public function getPublishedDate(): ?string
     {
         return $this->publishedDate;
     }
 
-    public function setPublishedDate(\DateTimeInterface $publishedDate): self
+    public function setPublishedDate(string $publishedDate): self
     {
         $this->publishedDate = $publishedDate;
 
