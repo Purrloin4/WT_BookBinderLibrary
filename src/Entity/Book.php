@@ -5,8 +5,8 @@ namespace App\Entity;
 use App\Repository\BookRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\Date;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
 class Book
@@ -23,13 +23,14 @@ class Book
     private Collection $comments;
 
     #[ORM\Column(nullable: true)]
-    private ?string $publishedDate = null;
+    private ?\DateTimeImmutable $publishedDate = null;
 
     #[ORM\Column(nullable: true)]
     private ?float $averageRating = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $ratingsCount = null;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -59,6 +60,7 @@ class Book
     {
         return $this->comments;
     }
+
     public function addComment(Comment $comment): self
     {
         if (!$this->comments->contains($comment)) {
@@ -82,12 +84,12 @@ class Book
         return $this;
     }
 
-    public function getPublishedDate(): ?string
+    public function getPublishedDate(): ?\DateTimeImmutable
     {
         return $this->publishedDate;
     }
 
-    public function setPublishedDate(string $publishedDate): self
+    public function setPublishedDate(\DateTimeImmutable $publishedDate): self
     {
         $this->publishedDate = $publishedDate;
 

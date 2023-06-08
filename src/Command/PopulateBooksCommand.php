@@ -87,7 +87,7 @@ class PopulateBooksCommand extends Command
             $book = (new Book())
                 ->setIsbn($row['isbn'])
                 ->setAverageRating(floatval($row['average_rating']))
-                ->setPublishedDate($row['publication_date'])
+                ->setPublishedDate(new \DateTimeImmutable($row['publication_date']))
                 ->setRatingsCount(intval($row['ratings_count']))
             ;
 
