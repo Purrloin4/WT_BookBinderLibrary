@@ -12,7 +12,7 @@
     {#  Todo: book info ie. Cover, title, author and description  #}
 
     <div class="subscribe">
-        {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+        {% if app.user %}
             <a href="{{ path('app_login') }}">Subscribe after Login</a>
         {% elseif isSubscribed %}
             <a href="{{ path('book_unsubscribe', {'id': book.id}) }}">Unsubscribe</a>

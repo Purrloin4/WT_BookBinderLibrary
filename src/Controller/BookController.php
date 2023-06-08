@@ -77,12 +77,23 @@ class BookController extends AbstractController
             return $this->redirectToRoute('book_show', ['id' => $book->getId()]);
         }
 
+        $subscribers = $entityManager->getRepository(Subscribe::class)->getSubscribersByBookId($book->getId());
+
+        $isSubscribed = false;
+        $user = $this->getUser();
+
+        if (null !== $user) {
+            $isSubscribed = $entityManager->getRepository(Subscribe::class)->isSubscribed($user->getId(), $book->getId());
+        }
+
         return $this->render('book/index.html.twig', [
             'book' => $book,
             'editComment' => $comment,
             'comments' => $entityManager->getRepository(Comment::class)->findAll($book->getId()),
             'editingComment' => true,
             'editCommentForm' => $form->createView(),
+            'subscribers' => $subscribers,
+            'isSubscribed' => $isSubscribed,
         ]);
     }
 
