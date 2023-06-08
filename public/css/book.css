@@ -10,6 +10,11 @@ aside{
     margin-right: 50px;
 }
 
+h1{
+    font-size: 40px;
+
+}
+
 .book_textual_data, .book_comments{
     display: flex;
     flex-direction: column;
