@@ -31,17 +31,23 @@
                         value="{{ field_value(registrationForm.email) }}"
                         placeholder="{{ field_label(registrationForm.email) }}"
                 />
+                {{ form_errors(registrationForm.email) }}
+
                 <input
                         name="{{ field_name(registrationForm.displayName) }}"
                         value="{{ field_value(registrationForm.displayName) }}"
                         placeholder="{{ field_label(registrationForm.displayName) }}"
                 />
+                {{ form_errors(registrationForm.displayName) }}
+
                 <input
                         name="{{ field_name(registrationForm.plainPassword) }}"
                         value="{{ field_value(registrationForm.plainPassword) }}"
                         placeholder="{{ field_label(registrationForm.plainPassword) }}"
                         type="password"
                 />
+                {{ form_errors(registrationForm.plainPassword) }}
+
                 {{ form_row(registrationForm.agreeTerms) }}
                 <br>
                 <button type="submit" class="btn">Register</button>

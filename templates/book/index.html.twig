@@ -77,6 +77,8 @@
                         <h2>Leave a comment!</h2>
                         {{ form(commentForm) }}
                     {% endif %}
+                {% else %}
+                    <p><a href="{{ path('app_login') }}">Login</a> or <a href="{{ path('app_register') }}">Register</a> to leave a comment.</p>
                 {% endif %}
             </section>
         </div>
