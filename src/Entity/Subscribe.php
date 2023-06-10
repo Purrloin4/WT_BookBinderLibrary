@@ -13,13 +13,13 @@ class Subscribe
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'follows')]
+    #[ORM\ManyToOne(inversedBy: 'subscribes')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $User = null;
+    private ?User $user = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Book $Book = null;
+    private ?Book $book = null;
 
     public function getId(): ?int
     {
@@ -28,24 +28,24 @@ class Subscribe
 
     public function getUser(): ?User
     {
-        return $this->User;
+        return $this->user;
     }
 
     public function setUser(?User $user): self
     {
-        $this->User = $user;
+        $this->user = $user;
 
         return $this;
     }
 
     public function getBook(): ?Book
     {
-        return $this->Book;
+        return $this->book;
     }
 
-    public function setBook(?Book $Book): self
+    public function setBook(?Book $book): self
     {
-        $this->Book = $Book;
+        $this->book = $book;
 
         return $this;
     }
