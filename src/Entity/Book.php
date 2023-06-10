@@ -22,7 +22,7 @@ class Book
     private Collection $comments;
 
     #[ORM\Column(nullable: true, columnDefinition: "DATE")]
-    private ?\DateTimeInterface $publishedDate = null;
+    private ?\DateTime $publishedDate = null;
 
     #[ORM\Column(nullable: true)]
     private ?float $averageRating = null;
