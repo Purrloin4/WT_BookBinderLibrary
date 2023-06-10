@@ -3,7 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Book;
-use App\Entity\Follow;
+use App\Entity\Subscribe;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -11,19 +11,19 @@ use Doctrine\Persistence\ManagerRegistry;
 /**
  * @extends ServiceEntityRepository<Follow>
  *
- * @method Follow|null find($id, $lockMode = null, $lockVersion = null)
- * @method Follow|null findOneBy(array $criteria, array $orderBy = null)
- * @method Follow[]    findAll()
- * @method Follow[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Subscribe|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Subscribe|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Subscribe[]    findAll()
+ * @method Subscribe[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class FollowRepository extends ServiceEntityRepository
+class SubscribeRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Follow::class);
+        parent::__construct($registry, Subscribe::class);
     }
 
-    public function save(Follow $entity, bool $flush = false): void
+    public function save(Subscribe $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -32,7 +32,7 @@ class FollowRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Follow $entity, bool $flush = false): void
+    public function remove(Subscribe $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -44,7 +44,7 @@ class FollowRepository extends ServiceEntityRepository
     /**
      * @return Book[] Returns an array of Book objects
      */
-    public function getUserFollows(User $user): array
+    public function getUserSubscribes(User $user): array
     {
         $qb = $this->createQueryBuilder('f');
 
@@ -60,7 +60,7 @@ class FollowRepository extends ServiceEntityRepository
     /**
      * @return User[] Returns an array of Book objects
      */
-    public function getBookFollows(Book $book): array
+    public function getBookSubscribes(Book $book): array
     {
         $qb = $this->createQueryBuilder('f');
 
