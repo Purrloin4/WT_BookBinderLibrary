@@ -581,7 +581,6 @@ a:link{
   border-radius: 4px;
   display: flex;
   flex-direction: column;
-  cursor: pointer;
   padding: 0 0 20px 20px;
   color: var(--body-color-light);
 }
@@ -596,6 +595,7 @@ a:link{
   object-fit: cover;
   margin-bottom: 20px;
   transition: 0.3s ease;
+  cursor: pointer;
 }
 .book-card-img:hover {
   transform: scale(1.04);
