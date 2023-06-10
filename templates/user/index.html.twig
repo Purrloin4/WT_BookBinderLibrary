@@ -7,14 +7,40 @@
     <link rel="stylesheet" href="{{ asset('css/user.css') }}"/>
 {% endblock %}
 
-{% block body %}
-    <div class="user-profile">
-        <h1>{{ user.getDisplayName }}</h1>
-{#FIXME: This is not working#}
-{#        <ul>#}
-{#            {% for comment in user.getComments %}#}
-{#                <li>{{ comment.getMessage }}</li>#}
-{#            {% endfor %}#}
-{#        </ul>#}
-    </div>
+{% block content %}
+    <main class="user-profile">
+        <section class="user_info">
+            <h2> My account info </h2>
+            <h3> User name: {{ user.getDisplayName }} </h3>
+            <h3> Email: {{ user.getEmail }} </h3>
+        </section>
+        <section class="user_friends">
+            <h2> My Friends </h2>
+            <ul>
+                {#FIXME: This is not working#}
+                {# {% for friend in user.getFriends %}
+                <li> {{ friend.getName }} </li>
+                {% endfor %} #}
+                <li> Friend 1 </li>
+                <li> Friend 2 </li>
+                <li> Friend ... </li>
+            </ul>
+        </section>
+        <section class="user_comments">
+            <h2> My Comments </h2>
+            <ul>
+                {#FIXME: This is not working#}
+                {# {% for comment in user.getComments %}
+                <li>{{ comment.getMessage }}</li>}
+                {% endfor %}} #}
+                <li> Comment 1 </li>
+                <li> Comment 2 </li>
+                <li> Comment ... </li>
+            </ul>
+        </section>
+        <section class="user_messages">
+            <h2> My Messages </h2>
+            <p> Click <u><a href="{{ path('app_messages') }}">here</a></u>  to check out your messages. </p>
+        </section>
+    </main>
 {% endblock %}
