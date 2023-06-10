@@ -12,21 +12,25 @@ footer {
     flex-direction: column;
     flex-grow: 1;
     margin: 100px 50px;
+    text-align: center;
 }
 
 h1 {
     font-size: xx-large;
     margin: 10px;
-    text-align: center;
 }
 
 h2 {
     font-size: large;
     margin-left: 20px;
-    text-align: center;
+}
+
+ul{
+    display: table;
+    margin: auto;
+    text-align: left;
 }
 
 p {
     margin: 0;
-    text-align: center;
 }
