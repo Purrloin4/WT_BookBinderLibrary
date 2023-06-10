@@ -2,6 +2,11 @@
 
 {% block title %}{{ user.getDisplayName }}{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/user.css') }}"/>
+{% endblock %}
+
 {% block body %}
     <div class="user-profile">
         <h1>{{ user.getDisplayName }}</h1>
