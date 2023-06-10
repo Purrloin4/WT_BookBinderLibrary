@@ -33,21 +33,12 @@
             </div>
         </div>
         <div class="main-wrapper">
-            <section class="books-of">
-                <div class="week year">
-                    <div class="author-title">Books of the year</div>
-                    {% for friend in friend_list %}
-                    <div class="year-book" data-isbn="{{ friend.getDisplayName }}">
-                        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="book cover placeholder" class="year-book-img">
-                        <div class="year-book-content">
-                            <div class="year-book-name">Book Title Placeholder</div>
-                            <div class="year-book-author">by <span>Author's Name Placeholder</span></div>
-                        </div>
+            <div class="friend list">friend list
+                {% for friend in friend_list %}
+                    <div class="friend name" > {{ friend.getDisplayName }}
                     </div>
-                    {% endfor %}
-                </div>
-                <div class="overlay"></div>
-            </section>
+                {% endfor %}
+            </div>
             <div class="popular-books">
                 <div class="main-menu">
                     <div class="genre">Popular Books</div>

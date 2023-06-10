@@ -20,8 +20,12 @@ class HomeController extends AbstractController
         // Find popular books
         $popularBooks = $bookRepository->findPopularBooks(8);
 
-        // Find books of the year
-        $friendList = $friendshipRepository->findByUser($this->getUser());
+        // Find the user's friends
+        if($this->getUser()) {
+            $friendList = $friendshipRepository->findBySender($this->getUser(), true);
+        } else {
+            $friendList = [];
+        }
 
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',

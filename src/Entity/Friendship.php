@@ -64,4 +64,13 @@ class Friendship
 
         return $this;
     }
+
+    public function getFriend(): ?User
+    {
+        if ($this->getSender() === $this->getUser()) {
+            return $this->getReceiver();
+        }
+
+        return $this->getSender();
+    }
 }
