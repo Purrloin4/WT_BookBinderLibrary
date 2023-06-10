@@ -81,15 +81,11 @@ class BookRepository extends ServiceEntityRepository
      */
     public function findPopularBooks(int $limit): array
     {
-        $recentDate = new \DateTime('-3 years');
-
         return $this->createQueryBuilder('b')
             ->orderBy('b.averageRating', 'DESC')
             ->addOrderBy('b.ratingsCount', 'DESC')
-            ->andWhere('b.publishedDate >= :recentDate')
             ->andWhere('b.ratingsCount > :minRatingsCount')
             ->andWhere('b.averageRating > :minAverageRating')
-            ->setParameter('recentDate', $recentDate)
             ->setParameter('minRatingsCount', 1000)
             ->setParameter('minAverageRating', 4.0)
             ->setMaxResults($limit)
@@ -114,28 +110,4 @@ class BookRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-
-    /**
-     * Finds a random selection of books published this year.
-     *
-     * @param int $limit The maximum number of books to retrieve
-     * @return Book[] Returns an array of random Book objects published this year
-     */
-    public function findRandomBooksPublishedThisYear(int $limit): array
-    {
-        $currentYear = (int) date('Y');
-        $startDate = new \DateTime("{$currentYear}-01-01");
-        $endDate = new \DateTime();
-
-        return $this->createQueryBuilder('b')
-            ->andWhere('b.publishedDate >= :startDate')
-            ->andWhere('b.publishedDate <= :endDate')
-            ->setParameter('startDate', $startDate)
-            ->setParameter('endDate', $endDate)
-            ->setMaxResults($limit)
-            ->getQuery()
-            ->getResult();
-    }
-
-
 }

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\BookRepository;
+use App\Repository\FriendshipRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -11,7 +12,7 @@ class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_root')]
     #[Route('/home', name: 'app_home')]
-    public function index(BookRepository $bookRepository): Response
+    public function index(BookRepository $bookRepository, FriendshipRepository $friendshipRepository): Response
     {
         // Find sliding books
         $slidingBooks = $bookRepository->findTopRatedBooks(5);
@@ -20,13 +21,13 @@ class HomeController extends AbstractController
         $popularBooks = $bookRepository->findPopularBooks(8);
 
         // Find books of the year
-        $yearBooks = $bookRepository->findRandomBooksPublishedThisYear(5);
+        $friendList = $friendshipRepository->findByUser($this->getUser());
 
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
             'sliding_books' => $slidingBooks,
             'popular_books' => $popularBooks,
-            'year_books' => $yearBooks,
+            'friend_list' => $friendList,
         ]);
     }
 }

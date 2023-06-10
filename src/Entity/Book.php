@@ -21,8 +21,8 @@ class Book
     #[ORM\OneToMany(mappedBy: 'book', targetEntity: Comment::class)]
     private Collection $comments;
 
-    #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $publishedDate = null;
+    #[ORM\Column(nullable: true, columnDefinition: "DATE")]
+    private ?\DateTimeInterface $publishedDate = null;
 
     #[ORM\Column(nullable: true)]
     private ?float $averageRating = null;
