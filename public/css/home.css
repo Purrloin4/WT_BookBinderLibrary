@@ -798,7 +798,8 @@ a:link{
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-top: auto;
+  margin-top: 50px;
+  margin-bottom: 0;
 }
 
 .menu {

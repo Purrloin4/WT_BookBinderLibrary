@@ -1,0 +1,32 @@
+main {
+    background-color: rgb(242, 245, 247);
+}
+
+footer {
+    background-color: rgb(242, 245, 247);
+}
+
+.main-wrapper {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin: 100px 50px;
+}
+
+h1 {
+    font-size: xx-large;
+    margin: 10px;
+    text-align: center;
+}
+
+h2 {
+    font-size: large;
+    margin-left: 20px;
+    text-align: center;
+}
+
+p {
+    margin: 0;
+    text-align: center;
+}

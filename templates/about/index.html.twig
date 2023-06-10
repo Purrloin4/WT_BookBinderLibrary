@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}About{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/flickity/1.0.0/flickity.css'>
+    <link rel="stylesheet" href="{{ asset('css/about.css') }}">
+{% endblock %}
+
+{% block content %}
+    <main>
+        <div class="main-wrapper">
+            <h1>Welcome to our Software-engineering and Web technology project</h1>
+            <p>
+                This website is made for a course we followed called: "Software-engineering and Web technology".
+                Each team of 5 students had to work together to make a website about the "BookBinder" concept seen in other courses.
+            </p>
+            <h2>Our implementation</h2>
+            <p>
+                Our vision was to create an environment to aid people interested in reading to find like-minded readers and discuss
+                book, characters and authors.<br><br>
+
+                To achieve this we provide these features:<br>
+                - User authentication<br>
+                - Friendships<br>
+                - Messaging<br>
+                - Commenting<br>
+                - Subscribing<br>
+            </p>
+            <h2>The team</h2>
+            <p>
+                Our team of 5 students consisted out of:<br>
+                Sinyeol, scrum master/project manager<br>
+                Zeus, database engineer<br>
+                Wentai, backend developer<br>
+                Dries, frontend developer<br>
+                Cédric, deployment/CI engineer<br>
+            </p>
+        </div>
+    </main>
+{% endblock %}
