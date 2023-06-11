@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}About{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/flickity/1.0.0/flickity.css'>
+    <link rel="stylesheet" href="{{ asset('css/about.css') }}">
+{% endblock %}
+
+{% block content %}
+    <main>
+        <div class="main-wrapper">
+            <h1>Welcome to our Software Engineering & Web Technology project!</h1>
+            <br>
+            <p>
+                This website is made for the course of <i>Software Engineering & Web Technology</i>.
+                Each team of 5 students had to work together to make a website about the "BookBinder" concept seen in the course of <i>Human-Computer Interaction</i>.
+            </p>
+            <br>
+            <h2>Our implementation</h2>
+            <p>
+                Our vision was to create an environment to aid people interested in reading to find like-minded readers and discuss
+                books, characters and authors. <br><br>
+                To achieve this we provide these features:
+            </p>
+            <br>
+            <ul>
+                <li>User authentication</li>
+                <li>Friendships</li>
+                <li>Messaging</li>
+                <li>Commenting</li>
+                <li>Subscribing</li>
+            </ul>
+            <h2>The team</h2>
+            <ul>
+                <li>Sinyeol An - scrum master/project manager</li>
+                <li>Zeus Anseeuw - database engineer</li>
+                <li>Wentai Ye - backend developer</li>
+                <li>Dries Van Ranst - frontend developer</li>
+                <li>Cédric Josse - deployment/CI engineer<br></li>
+            </ul>
+        </div>
+    </main>
+{% endblock %}

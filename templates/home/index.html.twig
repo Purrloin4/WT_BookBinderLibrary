@@ -20,7 +20,7 @@
                 {% for book in sliding_books %}
                 <div class="book-cell" data-isbn={{ book.isbn }}>
                     <div class="book-img">
-                        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="book cover placeholder" class="book-photo">
+                        <a href="{{ path('book_show', {'id':book.id}) }}"> <img src="data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="book cover placeholder" class="book-photo"> </a>
                     </div>
                     <div class="book-content">
                         <div class="book-title">Book Title</div>
@@ -38,7 +38,7 @@
                     <div class="author-title">Books of the year</div>
                     {% for book in year_books %}
                     <div class="year-book" data-isbn="{{ book.isbn }}">
-                        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="book cover placeholder" class="year-book-img">
+                        <a href="{{ path('book_show', {'id':book.id}) }}"> <img src="data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="book cover placeholder" class="year-book-img"> </a>
                         <div class="year-book-content">
                             <div class="year-book-name">Book Title Placeholder</div>
                             <div class="year-book-author">by <span>Author's Name Placeholder</span></div>
@@ -56,7 +56,7 @@
                     {% for book in popular_books %}
                     <div class="book-card" data-isbn="{{ book.isbn }}">
                         <div class="content-wrapper">
-                            <img src="data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="book cover placeholder" class="book-card-img">
+                            <a href="{{ path('book_show', {'id':book.id}) }}"> <img src="data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="book cover placeholder" class="book-card-img"> </a>
                             <div class="card-content">
                                 <div class="book-name">Changes Are</div>
                                 <div class="book-by">by <span>Richard Russo</span></div>
