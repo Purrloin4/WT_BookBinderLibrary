@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -52,7 +51,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToMany(mappedBy: 'commenter', targetEntity: Comment::class)]
     private Collection $comments;
-
 
     public function __construct()
     {
@@ -158,7 +156,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function addFriendship(Friendship $friendship): self // redundant gives warning so maybe remove @Sinyeol
     {
         if (!$this->sentFriendships->contains($friendship)) {
-            $this->friendships->add($friendship);
+            $this->sentFriendships->add($friendship);
             $friendship->setSender($this);
         }
 
@@ -252,19 +250,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection
-     */
     public function getComments(): Collection
     {
         return $this->comments;
-    }
-
-    /**
-     * @param Collection $comments
-     */
-    public function setComments(Collection $comments): void
-    {
-        $this->comments = $comments;
     }
 }

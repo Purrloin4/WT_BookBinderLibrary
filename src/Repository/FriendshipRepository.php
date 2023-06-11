@@ -72,26 +72,6 @@ class FriendshipRepository extends ServiceEntityRepository
         ;
     }
 
-    /**
-     * @return Friendship[] Returns an array of Friendship objects
-     */
-    public function findByUser(User $user, bool $approved = true): array
-    {
-        $qb = $this->createQueryBuilder('f');
-
-        return $qb
-            ->andWhere($qb->expr()->orX(
-                $qb->expr()->eq('f.sender', ':user'),
-                $qb->expr()->eq('f.receiver', ':user')))
-            ->andWhere('f.approved = :approved')
-            ->setParameter('user', $user)
-            ->setParameter('approved', $approved)
-            ->orderBy('f.id', 'ASC')
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-
 //    /**
 //     * @return Friendship[] Returns an array of Friendship objects
 //     */
