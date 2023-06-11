@@ -10,18 +10,30 @@ class Subscribe
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\Column(type: 'integer')]
+    private int $id;
 
-    #[ORM\ManyToOne(inversedBy: 'subscribes')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'subscribes')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', nullable: false)]
     private ?User $user = null;
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Book::class, inversedBy: 'subscribes')]
+    #[ORM\JoinColumn(name: 'book_id', referencedColumnName: 'id', nullable: false)]
     private ?Book $book = null;
 
-    public function getId(): ?int
+    #[ORM\Column(type: 'boolean')]
+    private bool $status;
+
+    #[ORM\Column(type: 'datetime')]
+    private \DateTimeInterface $timeStamp;
+
+    public function __construct()
+    {
+        $this->timeStamp = new \DateTimeImmutable();
+        $this->status = true;
+    }
+
+    public function getId(): int
     {
         return $this->id;
     }
@@ -46,6 +58,30 @@ class Subscribe
     public function setBook(?Book $book): self
     {
         $this->book = $book;
+
+        return $this;
+    }
+
+    public function getStatus(): bool
+    {
+        return $this->status;
+    }
+
+    public function setStatus(bool $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    public function getTimeStamp(): \DateTimeInterface
+    {
+        return $this->timeStamp;
+    }
+
+    public function setTimeStamp(\DateTimeInterface $timeStamp): self
+    {
+        $this->timeStamp = $timeStamp;
 
         return $this;
     }

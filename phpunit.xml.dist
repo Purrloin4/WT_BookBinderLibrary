@@ -3,8 +3,10 @@
 <!-- https://phpunit.readthedocs.io/en/latest/configuration.html -->
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         backupGlobals="false"
          colors="true"
          bootstrap="tests/bootstrap.php"
+         convertDeprecationsToExceptions="false"
 >
     <php>
         <ini name="display_errors" value="1" />
@@ -25,9 +27,6 @@
         <include>
             <directory suffix=".php">src</directory>
         </include>
-        <exclude>
-            <directory suffix=".php">src/DataFixtures</directory>
-        </exclude>
     </coverage>
 
     <listeners>
@@ -40,9 +39,4 @@
         <extension class="Symfony\Component\Panther\ServerExtension" />
     </extensions>
     -->
-    <extensions>
-        <extension class="Symfony\Component\Panther\ServerExtension" />
-    </extensions>
-
 </phpunit>
-

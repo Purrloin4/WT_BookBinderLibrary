@@ -3,108 +3,91 @@
 namespace App\DataFixtures;
 
 use App\Entity\Book;
+use App\Entity\Comment;
+use App\Entity\Subscribe;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Faker\Factory;
 
 class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        $this->loadBooks($manager);
+        $this->loadUsers($manager);
+        $this->loadSubscribes($manager);
+        $this->loadComments($manager);
 
         $manager->flush();
     }
 
-    private function loadBooks(ObjectManager $manager): void
+    private function loadUsers(ObjectManager $manager): void
     {
-        // Big Magic / Elizabeth Gilbert
-        $b01 = new Book();
-        $b01->setIsbn('978-1594634727');
-        $manager->persist($b01);
+        $faker = Factory::create('en_EN');
 
-        // Ten Thousand Skies Above You / Claudia Gray
-        $b02 = new Book();
-        $b02->setIsbn('978-0062279002');
-        $manager->persist($b02);
+        // Set a specific set of cities
+        $cities = ['Brussels', 'Antwerp', 'Ghent', 'Bruges', 'Liège', 'Namur', 'Leuven', 'Mons', 'Mechelen'];
 
-        // A Tale For The Time Being / Ruth Ozeki
-        $b03 = new Book();
-        $b03->setIsbn('978-0143124870');
-        $manager->persist($b03);
+        for ($i = 0; $i < 10; ++$i) {
+            $user = new User();
+            $user->setEmail($faker->email());
+            $user->setPassword($faker->password());
+            $user->setDisplayName($faker->name());
 
-        // The Great Gatsby / F.Scott Fitzgerald
-        $b04 = new Book();
-        $b04->setIsbn('978-0743273565');
-        $manager->persist($b04);
+            // Set a random birthday between 18 and 65 years ago
+            $birthday = $faker->dateTimeBetween('-22 years', '-14 years');
+            $user->setBirthday($birthday);
 
-        // After You / Jojo Moyes
-        $b05 = new Book();
-        $b05->setIsbn('978-0143131397');
-        $manager->persist($b05);
+            // Set a random gender (Male or Female)
+            $gender = $faker->randomElement(['Male', 'Female']);
+            $user->setGender($gender);
 
-        // Changes Are / Richard Russo
-        $b06 = new Book();
-        $b06->setIsbn('978-1101971994');
-        $manager->persist($b06);
+            // Set a random city from the defined set
+            $city = $faker->randomElement($cities);
+            $user->setCity($city);
 
-        // Dominicana / Angie Cruz
-        $b07 = new Book();
-        $b07->setIsbn('978-1250205933');
-        $manager->persist($b07);
+            $user->setRoles(['ROLE_USER']);
 
-        // The Travellers / Regina Porter
-        $b08 = new Book();
-        $b08->setIsbn('978-0525576198');
-        $manager->persist($b08);
+            $manager->persist($user);
+        }
+    }
 
-        // Afternoon Of A Faun / James Lasdun
-        $b09 = new Book();
-        $b09->setIsbn('978-0393357882');
-        $manager->persist($b09);
+    private function loadSubscribes(ObjectManager $manager): void
+    {
+        $faker = Factory::create('en_EN');
 
-        // Flash Count Diary / Darcey Steinke
-        $b10 = new Book();
-        $b10->setIsbn('978-0374156114');
-        $manager->persist($b10);
+        $users = $manager->getRepository(User::class)->findAll();
+        $books = $manager->getRepository(Book::class)->findAll();
 
-        // Picnic Comma Lightning / Laurence Scott
-        $b11 = new Book();
-        $b11->setIsbn('978-0393609974');
-        $manager->persist($b11);
+        foreach ($books as $book) {
+            // Randomly choose a user to subscribe
+            $user = $faker->randomElement($users);
+            $subscribe = new Subscribe();
+            $subscribe->setUser($user);
+            $subscribe->setBook($book);
+            $subscribe->setTimeStamp($faker->dateTimeBetween('-1 year', 'now'));
 
-        // Very Nice / Marcy Dermansky
-        $b12 = new Book();
-        $b12->setIsbn('978-0525655633');
-        $manager->persist($b12);
+            $manager->persist($subscribe);
+        }
+    }
 
-        // Stay and Fight / Madeline ffitch
-        $b13 = new Book();
-        $b13->setIsbn('978-1250619556');
-        $manager->persist($b13);
+    private function loadComments(ObjectManager $manager): void
+    {
+        $faker = Factory::create('en_EN');
 
-        // Disappearing Earth / Julia Phillips
-        $b14 = new Book();
-        $b14->setIsbn('978-0525520412');
-        $manager->persist($b14);
+        $users = $manager->getRepository(User::class)->findAll();
+        $books = $manager->getRepository(Book::class)->findAll();
 
-        // Lost Children Archive / Valeria Luiselli
-        $b15 = new Book();
-        $b15->setIsbn('978-0525520610');
-        $manager->persist($b15);
+        foreach ($books as $book) {
+            // Randomly choose a user to comment
+            $user = $faker->randomElement($users);
+            $comment = new Comment();
+            $comment->setCommenter($user);
+            $comment->setBook($book);
+            $comment->setMessage($faker->text());
+            $comment->setTimeStamp($faker->dateTimeBetween('-1 year', 'now'));
 
-        // Phantoms: A Thriller / Dean Koontz
-        $b16 = new Book();
-        $b16->setIsbn('978-0425253748');
-        $manager->persist($b16);
-
-        // Midnight in Chernobyl / Adam Higginbotham
-        $b17 = new Book();
-        $b17->setIsbn('978-1501134616');
-        $manager->persist($b17);
-
-        // 10 Minutes 38 Seconds / Elif Shafak
-        $b18 = new Book();
-        $b18->setIsbn('978-0241293867');
-        $manager->persist($b18);
+            $manager->persist($comment);
+        }
     }
 }

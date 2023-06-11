@@ -19,16 +19,6 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email', EmailType::class, [
-                'constraints' => [
-                    new Email([
-                        'message' => 'Please enter a valid email address.',
-                    ]),
-                    new NotBlank([
-                        'message' => 'Please enter an email address.',
-                    ]),
-                ],
-            ])
             ->add('displayName', null, [
                 'label' => 'Display name',
                 'constraints' => [
@@ -37,11 +27,13 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('agreeTerms', CheckboxType::class, [
-                'mapped' => false,
+            ->add('email', EmailType::class, [
                 'constraints' => [
-                    new IsTrue([
-                        'message' => 'You should agree to our terms.',
+                    new Email([
+                        'message' => 'Please enter a valid email address.',
+                    ]),
+                    new NotBlank([
+                        'message' => 'Please enter an email address.',
                     ]),
                 ],
             ])
@@ -59,6 +51,14 @@ class RegistrationFormType extends AbstractType
                         'minMessage' => 'Your password should be at least {{ limit }} characters.',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
+                    ]),
+                ],
+            ])
+            ->add('agreeTerms', CheckboxType::class, [
+                'mapped' => false,
+                'constraints' => [
+                    new IsTrue([
+                        'message' => 'You should agree to our terms.',
                     ]),
                 ],
             ])

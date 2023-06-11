@@ -3,24 +3,22 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private int $id;
 
     #[ORM\Column(length: 180, unique: true)]
-    private ?string $email = null;
+    private string $email;
 
     #[ORM\Column]
     private array $roles = [];
@@ -29,37 +27,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
-    private ?string $password = null;
+    private string $password;
 
-    #[ORM\Column(length: 60)]
-    private ?string $display_name = null;
+    #[ORM\Column(length: 255, nullable: false)]
+    private string $displayName;
 
-    #[ORM\OneToMany(mappedBy: 'sender', targetEntity: Friendship::class, orphanRemoval: true)]
-    private Collection $sentFriendships;
+    #[ORM\Column(length: 10, nullable: true)]
+    private ?string $gender = null;
 
-    #[ORM\OneToMany(mappedBy: 'receiver', targetEntity: Friendship::class, orphanRemoval: true)]
-    private Collection $receivedFriendship;
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTime $birthday = null;
 
-    #[ORM\OneToMany(mappedBy: 'Sender', targetEntity: Message::class)]
-    private Collection $sendMessages;
-
-    #[ORM\OneToMany(mappedBy: 'Receiver', targetEntity: Message::class)]
-    private Collection $receivedMessages;
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $city = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Subscribe::class)]
     private Collection $subscribes;
 
-    #[ORM\OneToMany(mappedBy: 'commenter', targetEntity: Comment::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Comment::class)]
     private Collection $comments;
-
-    public function __construct()
-    {
-        $this->sentFriendships = new ArrayCollection();
-        $this->receivedFriendship = new ArrayCollection();
-        $this->sendMessages = new ArrayCollection();
-        $this->receivedMessages = new ArrayCollection();
-        $this->subscribes = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -71,7 +57,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(string $email): static
     {
         $this->email = $email;
 
@@ -85,7 +71,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return $this->email;
     }
 
     /**
@@ -100,7 +86,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return array_unique($roles);
     }
 
-    public function setRoles(array $roles): self
+    public function setRoles(array $roles): static
     {
         $this->roles = $roles;
 
@@ -115,7 +101,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
-    public function setPassword(string $password): self
+    public function setPassword(string $password): static
     {
         $this->password = $password;
 
@@ -125,7 +111,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see UserInterface
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
@@ -133,89 +119,48 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getDisplayName(): ?string
     {
-        return $this->display_name;
+        return $this->displayName;
     }
 
-    public function setDisplayName(string $display_name): self
+    public function setDisplayName(string $displayName): self
     {
-        $this->display_name = $display_name;
+        $this->displayName = $displayName;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, Friendship>
-     */
-    public function getFriendships(): Collection
+    public function getGender(): ?string
     {
-        return new ArrayCollection(array_merge(
-            $this->sentFriendships->toArray(),
-            $this->receivedFriendship->toArray()));
+        return $this->gender;
     }
 
-    public function addFriendship(Friendship $friendship): self // redundant gives warning so maybe remove @Sinyeol
+    public function setGender(?string $gender): self
     {
-        if (!$this->sentFriendships->contains($friendship)) {
-            $this->sentFriendships->add($friendship);
-            $friendship->setSender($this);
-        }
+        $this->gender = $gender;
 
         return $this;
     }
 
-    public function removeFriendship(Friendship $friendship): self
+    public function getBirthday(): ?\DateTime
     {
-        // the friendship should be removed from the entity manager
-        if ($friendship->getSender() === $this) {
-            $this->sentFriendships->removeElement($friendship);
-        } else {
-            $this->receivedFriendship->removeElement($friendship);
-        }
+        return $this->birthday;
+    }
+
+    public function setBirthday(?\DateTime $birthday): self
+    {
+        $this->birthday = $birthday;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, Message>
-     */
-    public function getSendMessages(): Collection
+    public function getCity(): ?string
     {
-        return $this->sendMessages;
+        return $this->city;
     }
 
-    public function getReceivedMessages(): Collection
+    public function setCity(?string $city): self
     {
-        return $this->receivedMessages;
-    }
-
-    public function addSendMessage(Message $message): self
-    {
-        if (!$this->sendMessages->contains($message)) {
-            $this->sendMessages->add($message);
-            $message->setSender($this);
-        }
-
-        return $this;
-    }
-
-    public function addReceivedMessage(Message $message): self
-    {
-        if (!$this->receivedMessages->contains($message)) {
-            $this->receivedMessages->add($message);
-            $message->setSender($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMessage(Message $message): self
-    {
-        if ($this->sendMessages->removeElement($message)) {
-            // set the owning side to null (unless already changed)
-            if ($message->getSender() === $this) {
-                $message->setMessage('This message was removed by: '.$this->display_name);
-            }
-        }
+        $this->city = $city;
 
         return $this;
     }
@@ -226,6 +171,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getSubscribes(): Collection
     {
         return $this->subscribes;
+    }
+
+    public function setSubscribes(Collection $subscribes): void
+    {
+        $this->subscribes = $subscribes;
     }
 
     public function addSubscribe(Subscribe $subscribe): self
@@ -253,5 +203,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getComments(): Collection
     {
         return $this->comments;
+    }
+
+    public function setComments(Collection $comments): void
+    {
+        $this->comments = $comments;
     }
 }

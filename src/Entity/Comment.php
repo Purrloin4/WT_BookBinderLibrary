@@ -18,22 +18,19 @@ class Comment
     #[ORM\JoinColumn(nullable: false)]
     private ?User $commenter = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $message = null;
-
     #[ORM\ManyToOne(targetEntity: Book::class, inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Book $book = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $timestamp = null;
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $message = null;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
-    private bool $edited = false;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $timeStamp = null;
 
     public function __construct()
     {
-        $this->timestamp = new \DateTime();
+        $this->timeStamp = new \DateTime();
     }
 
     public function getId(): ?int
@@ -53,18 +50,6 @@ class Comment
         return $this;
     }
 
-    public function getMessage(): ?string
-    {
-        return $this->message;
-    }
-
-    public function setMessage(string $message): self
-    {
-        $this->message = $message;
-
-        return $this;
-    }
-
     public function getBook(): ?Book
     {
         return $this->book;
@@ -77,25 +62,32 @@ class Comment
         return $this;
     }
 
-    public function getTimestamp(): ?\DateTimeInterface
+    public function getMessage(): ?string
     {
-        return $this->timestamp;
+        return $this->message;
     }
 
-    public function getTimestampFormatted(): string
+    public function setMessage(string $message): self
     {
-        return $this->timestamp->format('Y-m-d H:i:s');
+        $this->message = $message;
+
+        return $this;
     }
 
-    public function setEdited(): bool
+    public function getTimeStamp(): ?\DateTimeInterface
     {
-        $this->edited = true;
-
-        return $this->edited;
+        return $this->timeStamp;
     }
 
-    public function getEdited(): bool
+    public function setTimeStamp(\DateTimeInterface $timeStamp): self
     {
-        return $this->edited;
+        $this->timeStamp = $timeStamp;
+
+        return $this;
+    }
+
+    public function timestampFormatted(): string
+    {
+        return $this->timeStamp->format('Y-m-d H:i');
     }
 }

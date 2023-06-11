@@ -2,27 +2,37 @@ main{
     display: flex;
     flex-direction: row;
     margin: 30px;
+    background: white;
+    padding: 50px;
+    border-radius: 10px;
 }
 
-aside{
+a{
+    cursor: pointer;
+}
+
+.cover_subscribe_rate{
     display: flex;
     flex-direction: column;
     margin-right: 50px;
+    justify-content: center;
+    align-items: center;
 }
 
-h1{
-    font-size: 40px;
-
+.subscribe button{
+    background-color: #fbadaf;
+    color: #fff;
+    border-radius: 20px;
+    padding: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+    width: 200px;
 }
-
-.book_textual_data, .book_comments{
-    display: flex;
-    flex-direction: column;
-}
-
-.info_and_comments{
-    display: flex;
-    flex-direction: column;
+.subscribe button:hover{
+    background-color: #ff6e72;
 }
 
 .starbox{
@@ -31,12 +41,123 @@ h1{
     text-align: center;
 }
 
-.fa-star{
+.starbox .fa-star{
     color: gray;
     margin-top: 20px;
     padding: 5px;
 }
 
-.filled{
+.starbox .filled{
     color: orange;
 }
+
+.cover_subscribe_rate p{
+    margin-top: 20px;
+}
+
+.info_subscribers_comments .book_textual_data, .book_comments{
+    display: flex;
+    flex-direction: column;
+}
+
+.book_textual_data .book_title {
+    font-size: 30px;
+    margin-top: 10px;
+    font-family: Georgia, serif;
+}
+
+.book_textual_data .book_author {
+    margin-top: 10px;
+    font-family: Georgia, serif;
+    font-weight: lighter;
+}
+
+.book_textual_data .book_description {
+    margin-top: 10px;
+    margin-right: 20px;
+    font-family: "Arial", sans-serif;
+    line-height: 1.5;
+}
+
+.subscribers-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.subscriber {
+    margin-right:40px;
+}
+
+.subscriber .user_name {
+    display: inline;
+    font-weight: bold;
+}
+
+.book_comments {
+    margin-top: 20px;
+    margin-right: 20px;
+}
+
+.comments {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.comment {
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 10px 20px 10px 20px;
+    margin-bottom: 10px;
+}
+
+.comment .user_name {
+    font-weight: bold;
+}
+
+.comment .comment_text {
+    margin: 5px 0;
+}
+
+.comment .comment_date {
+    color: #888;
+    font-size: 12px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    text-align: right;
+}
+
+.comment form {
+    margin-top: 10px;
+}
+
+.comment form textarea {
+    width: 100%;
+    height: 80px;
+    padding: 5px;
+}
+
+.comment form button {
+    margin-top: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.comment form button:hover {
+    background-color: #0069d9;
+}
+
+.comment p.login_message {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+
+
+
+
+

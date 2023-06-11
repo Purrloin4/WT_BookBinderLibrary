@@ -1,19 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Books{% endblock %}
+{% block title %}{{ book.getTitle }}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('css/book.css') }}"/>
 {% endblock %}
 
-
 {% block content %}
-    {#  Todo: book info ie. Cover, title, author, genre and description  #}
-
-    <main class="book_info" data-isbn={{ book.isbn }}>
-        <aside>
-            <img src="data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" class="book_photo" alt="Book cover of book #" width="250" height="400">
+    <main data-isbn={{ book.isbn }}>
+        <div class="cover_subscribe_rate">
+            <img src="{{ book.getCoverUrl }}" class="book_photo" alt="Book cover of book #" width="250" height="400">
+            <div class="subscribe">
+                {% if not app.user %}
+                    <button class="login_button" type="button" onclick="window.location.href='{{ path('app_login') }}'">Subscribe after Login</button>
+                {% elseif isSubscribed %}
+                    <button class="unsubscribe_button" type="button">Unsubscribe</button>
+                {% else %}
+                    <button class="subscribe_button" type="button">Subscribe</button>
+                {% endif %}
+            </div>
             <div class="starbox">
                 <span class="fa fa-star fa-2x filled"></span>
                 <span class="fa fa-star fa-2x filled"></span>
@@ -21,45 +27,39 @@
                 <span class="fa fa-star fa-2x"></span>
                 <span class="fa fa-star fa-2x"></span>
             </div>
-        </aside>
-        <div class="info_and_comments">
+            <p>Rate this book</p>
+        </div>
+
+        <div class="info_subscribers_comments">
             <section class="book_textual_data">
-                <h1 class="book_title">Book Title</h1>
-                <h2 class="book_author">Author</h2>
-                {# FIXME: replace the paragraph below with a real book description once it is available. #}
-                <p> lorem ipsum dolor sit amet ....</p>
+                <h1 class="book_title">{{ book.getTitle }}</h1>
+                <h2 class="book_author">{{ book.getAuthor }}</h2>
+                <p class="book_description">{{ book.getBookDescription }}</p>
+            </section>
+            <section class="book_subscribers">
+                <h2 class="subscribers">Subscribers</h2>
+                <div class="subscribers-row">
+                    {% for subscriber in subscribers %}
+                        <div class="subscriber">
+                            <a class="user_name" onclick="window.location.href='{{ path('app_user',{'id': subscriber.id}) }}'">{{ subscriber.displayName }}</a>
+                        </div>
+                        {% if not loop.last %}{% endif %}
+                    {% endfor %}
+                </div>
             </section>
             <section class="book_comments">
-                <h2>Comments</h2>
+                <h2 class="comments">Comments</h2>
                 {% for comment in comments %}
-                    <div>
-                        {# checks if we are currently editing this comment, using its ID #}
-                        {% if editingComment is defined and editingComment and comment.id == editComment.id %}
-                            {{ form(editCommentForm) }}
-                        {% else %}
-                            {{ comment.message }}
-                            {{ comment.edited? '(edited)' : '' }}
-                            {% if app.user %}
-                                {{ comment.commenter.displayName }}
-                            {% else %}
-                                <p><a href="{{ path('app_login') }}">Login</a> or <a href="{{ path('app_register') }}">Register</a> to view the commenter's name.</p>
-                            {% endif %}
-                            {{ comment.timestampFormatted }}
-                            {% if comment.commenter == app.user %}
-                                <a href="{{ path('comment_edit', {'id': book.id, 'commentId': comment.id}) }}">Edit</a>
-                                <a href="{{ path('comment_delete', {'id': book.id, 'commentId': comment.id}) }}">Delete</a>
-                            {% endif %}
-                        {% endif %}
+                    <div class="comment">
+                        <a class="user_name">{{ comment.commenter.displayName }}</a>
+                        <p class="comment_text">{{ comment.message }}</p>
+                        <p class="comment_date">{{ comment.timestampFormatted }}</p>
                     </div>
                 {% endfor %}
-                {# Render the normal comment form only if not editing a comment #}
                 {%  if app.user %}
-                    {% if editingComment is not defined or not editingComment %}
-                        <h2>Leave a comment!</h2>
-                        {{ form(commentForm) }}
-                    {% endif %}
+                    <h3>Leave a comment!</h3>
                 {% else %}
-                    <p><a href="{{ path('app_login') }}">Login</a> or <a href="{{ path('app_register') }}">Register</a> to leave a comment.</p>
+                    <p><a href="{{ path('app_login') }}">Login</a> to leave a comment.</p>
                 {% endif %}
             </section>
         </div>

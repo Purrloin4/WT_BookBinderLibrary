@@ -1,5 +1,61 @@
-.alert-danger{
-    font-style: italic;
-    color: red;
+/* Background styles */
+body, html {
+    height: 100%;
 }
 
+/* Login box styles */
+.login_box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    background-color: #fff;
+    padding: 30px;
+    margin-left: -200px;
+    margin-top: -174px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading styles */
+.login_box h1 {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Label styles */
+.login_box label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+/* Input styles */
+.login_box input[type="text"],
+.login_box input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+/* Submit button styles */
+.login_box button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login_box button:hover {
+    background-color: #0069d9;
+}

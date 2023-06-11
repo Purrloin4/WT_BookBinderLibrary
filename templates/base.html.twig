@@ -2,77 +2,54 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
+        <title>{% block title %}BookBinder{% endblock %}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{% block title %}Base{% endblock %}</title>
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         <link rel="icon" href="{{ asset('images/bookbinder_icon.png') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
-            <link rel="preconnect" href="https://fonts.googleapis.com">
-            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-            <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" />
-            <link rel="stylesheet" href="{{ asset('css/home.css') }}"/>
-        {% endblock %}
-
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-            <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+            <link rel="stylesheet" href="{{ asset('css/base.css') }}">
         {% endblock %}
     </head>
 
-    <body class="book-store">
-        {% block body %}
-            <header>
-                <label for="search"></label>
-                <input class="browse" type="text" id="search" placeholder="Search Book" />
-                <h1 class="header-title" onclick="window.location.href='{{ path('app_home') }}'">Book<span>Binder</span></h1>
-                <div class="profile">
-                    {% if app.user %}
-                        <div class="user-profile">
-                            {# TODO: Let the link below point to the user page (once it's made) #}
-                            {# TODO: Replace the hardcoded image by the user's profile image #}
-                            <img onclick="window.location.href='{{ path('app_register') }}'" src="https://randomuser.me/api/portraits/women/63.jpg" alt="" class="user-img">
-                        </div>
-                    {% else %}
-                        <div class="login_register_buttons">
-                            <a href="{{ path('app_login') }}">
-                                <button class="login_button" type="button">Login</button>
-                            </a>
-                            <a href="{{ path('app_register') }}">
-                                <button class="register_button" type="button">Register</button>
-                            </a>
-
-                        </div>
-                    {% endif %}
-                    <div class="profile-menu">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
-                            <path d="M3 12h18M3 6h18M3 18h18" /></svg>
-                        Menu
-                    </div>
+    <body>
+        <header>
+            <div class="header-search">
+                <div class="search">
+                    <input type="text" class="searchTerm" placeholder="What are you looking for?">
+                    <button type="submit" class="searchButton">
+                        <i class="fas fa-search"></i>
+                    </button>
                 </div>
-            </header>
-        {% endblock %}
-        {% block content %}{% endblock %}
-        <footer class="footer">
-            <div class="waves">
-                <div class="wave" id="wave1"></div>
-                <div class="wave" id="wave2"></div>
-                <div class="wave" id="wave3"></div>
-                <div class="wave" id="wave4"></div>
             </div>
-            <ul class="menu">
-                <li class="menu__item"><a class="menu__link" href="{{ path('app_root')}}">Home</a></li>
-                <li class="menu__item"><a class="menu__link" href="{{ path('app_about') }}">About</a></li>
-                <li class="menu__item"><a class="menu__link" href="{{ path('app_gdpr') }}">GDPR</a></li>
 
-            </ul>
-            <p>Footer by: &copy;2021 Nadine Coelho | All Rights Reserved</p>
+            <div class="header-logo" onclick="window.location.href='{{ path('app_home') }}'">Book<span>Binder</span></div>
+
+            <div class="header-user">
+                {% if app.user %}
+                    <div class="user-avatar">
+                        <img src="{{ asset('images/anonymous_user.png') }}" alt="" class="user-img" onclick="window.location.href='{{ path('app_user', {'id': app.user.getId}) }}'">
+                    </div>
+                {% else %}
+                    <div class="login-register">
+                        <button class="login_button" type="button" onclick="window.location.href='{{ path('app_login') }}'">Sign in</button>
+                        <button class="register_button" type="button" onclick="window.location.href='{{ path('app_register') }}'">Register</button>
+                    </div>
+                {% endif %}
+            </div>
+        </header>
+
+        {% block content %}{% endblock %}
+
+        <footer>
+            <p>Copyright &copy 2023 WebTech. KUL&nbsp;All Rights Reserved.&nbsp;&nbsp;
+                <a href="#">Privacy Policy</a> | <a href="#">Terms of Use</a>
+            </p>
         </footer>
-        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
     </body>
 
-
-
-
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
 </html>

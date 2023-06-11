@@ -15,7 +15,7 @@ class CommentMessageFormType extends AbstractType
     {
         $builder
             ->add('message', TextareaType::class, [
-                'label' => $options['is_edit'] ? 'Edit your comment' : 'Your comment',
+                'label' => 'Your comment',
                 'attr' => ['rows' => 4],
             ])
             ->add('submit', SubmitType::class, [
@@ -28,7 +28,6 @@ class CommentMessageFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Comment::class,
-            'is_edit' => false,
         ]);
     }
 }

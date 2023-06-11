@@ -9,7 +9,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Follow>
+ * @extends ServiceEntityRepository<Subscribe>
  *
  * @method Subscribe|null find($id, $lockMode = null, $lockVersion = null)
  * @method Subscribe|null findOneBy(array $criteria, array $orderBy = null)
@@ -49,10 +49,11 @@ class SubscribeRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('f');
 
         return $qb
-            ->andWhere($qb->expr()->eq('f.User', ':user'))
+            ->andWhere($qb->expr()->eq('f.user', ':user'))
             ->setParameter('user', $user)
-            ->orderBy('f.id', 'ASC')
+            ->orderBy('f.timeStamp', 'ASC')
             ->getQuery()
+            ->setMaxResults(5)
             ->getResult()
         ;
     }
@@ -65,7 +66,7 @@ class SubscribeRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('f');
 
         return $qb
-            ->andWhere($qb->expr()->eq('f.Book', ':book'))
+            ->andWhere($qb->expr()->eq('f.book', ':book'))
             ->setParameter('book', $book)
             ->orderBy('f.id', 'ASC')
             ->getQuery()
@@ -73,28 +74,32 @@ class SubscribeRepository extends ServiceEntityRepository
         ;
     }
 
-//    /**
-//     * @return Follow[] Returns an array of Follow objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('f')
-//            ->andWhere('f.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('f.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function getSubscribersByBookId(int $bookId): array
+    {
+        $qb = $this->createQueryBuilder('f');
+        $qb->select('f')
+            ->join('f.book', 'b')
+            ->where('b.id = :bookId')
+            ->setParameter('bookId', $bookId)
+            ->orderBy('f.id', 'DESC')
+            ->setMaxResults(5);
 
-//    public function findOneBySomeField($value): ?Follow
-//    {
-//        return $this->createQueryBuilder('f')
-//            ->andWhere('f.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        return $qb->getQuery()->getResult();
+    }
+
+    public function isSubscribed(int $userId, int $bookId): bool
+    {
+        $qb = $this->createQueryBuilder('f');
+
+        $result = $qb
+            ->select('COUNT(f.id)')
+            ->andWhere($qb->expr()->eq('f.user', ':userId'))
+            ->andWhere($qb->expr()->eq('f.book', ':bookId'))
+            ->setParameter('userId', $userId)
+            ->setParameter('bookId', $bookId)
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        return $result > 0;
+    }
 }

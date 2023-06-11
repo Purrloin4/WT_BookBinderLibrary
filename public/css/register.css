@@ -1,25 +1,67 @@
-.row{
-    display: flex;
-    flex-direction: column;
-    width: 40%;
+/* Background styles */
+body, html {
+    height: 100%;
+}
+
+/* Register box styles */
+.register_box {
     position: absolute;
-    top: 50%;
+    top: 40%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    font-family: 'Poppins', sans-serif;
+    width: 400px;
+    background-color: #fff;
+    padding: 30px;
+    margin-left: -200px;
+    margin-top: -174px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.row input{
-    margin: 10px;
+/* Heading styles */
+.register_box h1 {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 30px;
 }
 
-::-ms-input-placeholder { /* Microsoft Edge */
-    color: black;
-    font-family: 'Poppins', sans-serif;
+/* Label styles */
+.register_box label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
 }
 
-::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: black;
-    opacity: 1; /* Firefox */
-    font-family: 'Poppins', sans-serif;
+/* Input styles */
+.register_box input[type="text"],
+.register_box input[type="password"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 20px;
 }
+
+/* Submit button styles */
+.register_box button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.register_box button:hover {
+    background-color: #0069d9;
+}
+
+.login_box .a{
+    text-decoration: underline;
+}
+

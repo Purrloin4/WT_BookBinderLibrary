@@ -1,58 +1,72 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Register{% endblock %}</title>
-    {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-    <link rel="icon" href="{{ asset('images/bookbinder_icon.png') }}">
+{% extends 'base.html.twig' %}
 
-    {% block stylesheets %}
-        <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="{{ asset('css/login_and_register.css') }}" />
-        <link rel="stylesheet" href="{{ asset('css/register.css') }}" />
-    {% endblock %}
+{% block title %}Register{% endblock %}
 
-    {% block javascripts %}
-        {{ encore_entry_script_tags('app') }}
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-    {% endblock %}
-</head>
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/register.css') }}" />
+{% endblock %}
 
-{% block body %}
-    <section class="back"></section>
-    <section class="register_info">
-        <section class="register_box">
-            {{ form_start(registrationForm) }}
-            <div class="row">
-                <h1>Register</h1>
+{% block content %}
+    {% if app.user %}
+        <div class="mb-3">
+            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+        </div>
+    {% endif %}
+    <section class="register_box">
+        {{ form_start(registrationForm) }}
+        <div class="row">
+            <h1>Register</h1>
+
+            <label>Display Name</label>
+            <input
+                    name="{{ field_name(registrationForm.displayName) }}"
+                    value="{{ field_value(registrationForm.displayName) }}"
+                    placeholder="This is displayed to other users"
+                    type="text"
+            />
+            {{ form_errors(registrationForm.displayName) }}
+
+            <label>Email</label>
+            <input
+                    name="{{ field_name(registrationForm.email) }}"
+                    value="{{ field_value(registrationForm.email) }}"
+                    placeholder="Your email address"
+                    type="text"
+            />
+            {{ form_errors(registrationForm.email) }}
+
+            <label>Password</label>
+            <input
+                    name="{{ field_name(registrationForm.plainPassword) }}"
+                    value="{{ field_value(registrationForm.plainPassword) }}"
+                    placeholder="6-20 characters"
+                    type="password"
+            />
+            {{ form_errors(registrationForm.plainPassword) }}
+
+            <div class="checkbox mb-3">
+            <label>
                 <input
-                        name="{{ field_name(registrationForm.email) }}"
-                        value="{{ field_value(registrationForm.email) }}"
-                        placeholder="{{ field_label(registrationForm.email) }}"
+                        name="{{ field_name(registrationForm.agreeTerms) }}"
+                        value="{{ field_value(registrationForm.agreeTerms) }}"
+                        placeholder="{{ field_label(registrationForm.agreeTerms) }}"
+                        type="checkbox"
                 />
-                {{ form_errors(registrationForm.email) }}
+                I agree to the <a href="{{ path('app_terms') }}">terms and conditions</a>
+            </label>
 
-                <input
-                        name="{{ field_name(registrationForm.displayName) }}"
-                        value="{{ field_value(registrationForm.displayName) }}"
-                        placeholder="{{ field_label(registrationForm.displayName) }}"
-                />
-                {{ form_errors(registrationForm.displayName) }}
+            {{ form_errors(registrationForm.agreeTerms) }}
 
-                <input
-                        name="{{ field_name(registrationForm.plainPassword) }}"
-                        value="{{ field_value(registrationForm.plainPassword) }}"
-                        placeholder="{{ field_label(registrationForm.plainPassword) }}"
-                        type="password"
-                />
-                {{ form_errors(registrationForm.plainPassword) }}
+            <button type="submit" class="btn btn-primary">
+                Register
+            </button>
 
-                {{ form_row(registrationForm.agreeTerms) }}
-                <br>
-                <button type="submit" class="btn">Register</button>
-            </div>
-            {{ form_end(registrationForm) }}
-        </section>
+        </div>
+        {{ form_end(registrationForm) }}
     </section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
 {% endblock %}

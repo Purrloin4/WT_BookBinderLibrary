@@ -2,14 +2,74 @@
 
 {% block title %}{{ user.getDisplayName }}{% endblock %}
 
-{% block body %}
-    <div class="user-profile">
-        <h1>{{ user.getDisplayName }}</h1>
-{#FIXME: This is not working#}
-{#        <ul>#}
-{#            {% for comment in user.getComments %}#}
-{#                <li>{{ comment.getMessage }}</li>#}
-{#            {% endfor %}#}
-{#        </ul>#}
-    </div>
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/userhome.css') }}"/>
+{% endblock %}
+
+{% block content %}
+    <main>
+        <section class="user_info">
+            <h2 class="user_name">
+                <span id="name">{{ user.getDisplayName }}</span>
+                {% if isOwner %}
+                    <button class="edit_name" onclick="toggleEdit('name')">Edit</button>
+                    <form id="edit_form_name" style="display: none;">
+                        <label for="displayNameInput">Display Name:</label>
+                        <input type="text" id="displayNameInput" name="displayName" value="{{ user.getDisplayName }}">
+                        <button type="submit">Save</button>
+                    </form>
+                {% endif %}
+            </h2>
+            <p class="user_email">Email: <a>{{ user.getEmail }}</a></p>
+            <p class="user_gender">
+                Gender: <span id="gender">{{ user.getGender }}</span>
+                {% if isOwner %}
+                <button class="edit_gender" onclick="toggleEdit('gender')">Edit</button>
+            <form id="edit_form_gender" style="display: none;">
+                <label for="genderInput">Gender:</label>
+                <input type="text" id="genderInput" name="gender" value="{{ user.getGender }}">
+                <button type="submit">Save</button>
+            </form>
+            {% endif %}
+            </p>
+            <p class="user_age">
+                Age: <span id="age">{{ age }}</span>
+                {% if isOwner %}
+                <button class="edit_age" onclick="toggleEdit('age')">Edit</button>
+            <form id="edit_form_age" style="display: none;">
+                <label for="ageInput">Age:</label>
+                <input type="number" id="ageInput" name="age" value="{{ age }}">
+                <button type="submit">Save</button>
+            </form>
+            {% endif %}
+            </p>
+            <p class="user_city">
+                City: <span id="city">{{ user.getCity }}</span>
+                {% if isOwner %}
+                <button class="edit_city" onclick="toggleEdit('city')">Edit</button>
+            <form id="edit_form_city" style="display: none;">
+                <label for="cityInput">City:</label>
+                <input type="text" id="cityInput" name="city" value="{{ user.getCity }}">
+                <button type="submit">Save</button>
+            </form>
+            {% endif %}
+            </p>
+        </section>
+
+        <section class="user_subscribes">
+            <h2 class="user_subscribes_title">Subscriptions</h2>
+            <ul class="user_subscribes_list">
+                {% for subscribe in subscribes %}
+                    <li class="user_subscribes_item">
+                        <div class="book_info" data-isbn="{{ subscribe.getIsbn }}">
+                            <img class="book_photo" alt="Cover Image" onclick="window.location.href='{{ path('book_show', {'id': subscribe.getId}) }}'">
+                            <h3 class="book_title">BookTitle</h3>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+    </main>
+    <script src="{{ asset('js/userhome.js') }}"></script>
 {% endblock %}
