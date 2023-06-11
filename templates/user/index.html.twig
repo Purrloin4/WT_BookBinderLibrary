@@ -11,10 +11,7 @@
     <main class="user-profile">
         <section class="user_info">
             <h2 class="account_info"> My account info </h2>
-            <h3 class="user_name"> Username: {{ user.getDisplayName }} </h3>
-            <label for="new_username">Change my username to: </label>
-            <input type="text" id="new_username">
-            <button type="button">Change username</button>
+            <h3 class="user_name"> User name: {{ user.getDisplayName }} </h3>
             <h3 class="user_email"> Email: {{ user.getEmail }} </h3>
         </section>
         <section class="user_friends">
