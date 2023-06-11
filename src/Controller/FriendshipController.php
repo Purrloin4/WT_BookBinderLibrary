@@ -95,6 +95,13 @@ class FriendshipController extends AbstractController
             ]);
         }
 
+        if ($friendship->getReceiver()->getId() !== $this->getUser()->getId()) {
+            return new JsonResponse([
+                'status_code' => 403,
+                'message' => 'You are not allowed to approve this friend request',
+            ]);
+        }
+
         $friendship->setApproved(true);
         $em->persist($friendship);
 
@@ -110,6 +117,82 @@ class FriendshipController extends AbstractController
         return new JsonResponse([
             'status_code' => 200,
             'message' => "A friend request was successfully approved. Now you are a friend with {$friendship->getSender()->getDisplayName()}!",
+        ]);
+    }
+
+    #[Route('/api/reject_friend_request/{id}', name: 'app_api_reject_friend_request', methods: ['POST'])]
+    public function rejectFriendRequest(EntityManagerInterface $em, int $id): JsonResponse
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $friendship = $em->getRepository(Friendship::class)->find($id);
+
+        if (!$friendship) {
+            return new JsonResponse([
+                'status_code' => 404,
+                'message' => 'There is no such friend request',
+            ]);
+        }
+
+        if ($friendship->getReceiver()->getId() !== $this->getUser()->getId()) {
+            return new JsonResponse([
+                'status_code' => 403,
+                'message' => 'You are not allowed to reject this friend request',
+            ]);
+        }
+
+        $em->remove($friendship);
+
+        try {
+            $em->flush();
+        } catch (\Exception $e) {
+            return new JsonResponse([
+                'status_code' => 500,
+                'message' => "Woops! Something wrong with the database\n{$e->getMessage()}",
+            ]);
+        }
+
+        return new JsonResponse([
+            'status_code' => 200,
+            'message' => 'A friend request was successfully rejected.',
+        ]);
+    }
+
+    #[Route('/api/remove_friend/{id}', name: 'app_api_remove_friend', methods: ['POST'])]
+    public function removeFriend(EntityManagerInterface $em, int $id): JsonResponse
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $friendship = $em->getRepository(Friendship::class)->find($id);
+
+        if (!$friendship) {
+            return new JsonResponse([
+                'status_code' => 404,
+                'message' => 'There is no such friend request',
+            ]);
+        }
+
+        if ($friendship->getSender()->getId() !== $this->getUser()->getId() && $friendship->getReceiver()->getId() !== $this->getUser()->getId()) {
+            return new JsonResponse([
+                'status_code' => 403,
+                'message' => 'You are not allowed to remove this friend',
+            ]);
+        }
+
+        $em->remove($friendship);
+
+        try {
+            $em->flush();
+        } catch (\Exception $e) {
+            return new JsonResponse([
+                'status_code' => 500,
+                'message' => "Woops! Something wrong with the database\n{$e->getMessage()}",
+            ]);
+        }
+
+        return new JsonResponse([
+            'status_code' => 200,
+            'message' => 'A friend was successfully removed.',
         ]);
     }
 }

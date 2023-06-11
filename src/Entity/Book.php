@@ -74,10 +74,6 @@ class Book
     {
         if ($this->comments->contains($comment)) {
             $this->comments->removeElement($comment);
-            // set the owning side to null (unless already changed)
-            if ($comment->getBook() === $this) {
-                $comment->setBook(null);
-            }
         }
 
         return $this;
@@ -115,6 +111,22 @@ class Book
     public function setRatingsCount(?int $ratingsCount): self
     {
         $this->ratingsCount = $ratingsCount;
+
+        return $this;
+    }
+
+    public function addRating(int $rating): self
+    {
+        ++$this->ratingsCount;
+        $this->averageRating = ($this->averageRating * ($this->ratingsCount - 1) + $rating) / $this->ratingsCount;
+
+        return $this;
+    }
+
+    public function removeRating(int $rating): self
+    {
+        --$this->ratingsCount;
+        $this->averageRating = ($this->averageRating * ($this->ratingsCount + 1) - $rating) / $this->ratingsCount;
 
         return $this;
     }

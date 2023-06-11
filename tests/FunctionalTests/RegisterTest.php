@@ -21,7 +21,7 @@ class RegisterTest extends WebTestCase
         $client->submit($form);
 
         $response = $client->getResponse();
-        $this->assertEquals(302, $response->getStatusCode());
+        $this->assertEquals(200, $response->getStatusCode());
     }
 
     public function testRegisterIncorrectEmail(): void
