@@ -31,7 +31,7 @@
                         <div class="user-profile">
                             {# TODO: Let the link below point to the user page (once it's made) #}
                             {# TODO: Replace the hardcoded image by the user's profile image #}
-                            <img onclick="window.location.href='{{ path('app_register') }}'" src="https://randomuser.me/api/portraits/women/63.jpg" alt="" class="user-img">
+                            <img onclick="window.location.href='{{ path('app_user', {'id':'1'}) }}'" src="https://randomuser.me/api/portraits/women/63.jpg" alt="" class="user-img">
                         </div>
                     {% else %}
                         <div class="login_register_buttons">
